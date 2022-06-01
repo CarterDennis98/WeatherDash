@@ -1,8 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import esriConfig from "@arcgis/core/config";
 
-function App() {
+export default function App() {
+  esriConfig.apiKey = process.env.ESRI_API_KEY as string;
+  console.log(process.env.ESRI_API_KEY as string)
+
   return (
     <div className="App">
       <header className="App-header">
@@ -22,5 +26,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
