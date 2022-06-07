@@ -5,6 +5,8 @@ import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import IconButton from "@mui/material/IconButton";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
@@ -54,12 +56,19 @@ export default function App(props: any) {
             </IconButton>
           </div>
         </div>
-        <div style={{ height: "75%" }}>
-
+        <div style={{ height: "75%", display: "flex", alignItems: "flex-end" }}>
+          <TextField
+            variant="outlined"
+            placeholder="Search"
+            InputProps={{
+              endAdornment: <SearchIcon sx={{ color: "white" }} />
+            }}
+            sx={{marginLeft: "20px", width: "50%"}}
+          />
         </div>
       </div>
       <div style={{ height: "80%", width: "100%", display: "flex", flexDirection: "row" }}>
-        <div id="mapDiv" ref={mapDiv} style={{ display: "flex", height: "100%", width: "100%", boxShadow: "0px 5px 10px #151515", margin: "-20px 0px 20px 20px" }}>
+        <div id="mapDiv" ref={mapDiv} style={{ display: "flex", width: "100%", boxShadow: "0px 5px 10px #151515", margin: "0px 0px 20px 20px" }}>
 
         </div>
         <div style={{ height: "100%", width: "30%" }}>
