@@ -5,8 +5,7 @@ import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import IconButton from "@mui/material/IconButton";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchBar from "../src/components/search-bar";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
@@ -44,8 +43,8 @@ export default function App(props: any) {
     <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", background: "#4a4a4a" }}>
       <div style={{ height: "20%", width: "100%" }}>
         <div style={{
-          height: "60px", width: "100%", backgroundColor: "#2b2b2b", boxShadow: "0px 5px 10px #151515", display: "flex", justifyContent: "space-between",
-          boxSizing: "border-box", padding: "10px"
+          height: "25%", width: "100%", backgroundColor: "#2b2b2b", boxShadow: "0px 5px 10px #151515", display: "flex", justifyContent: "space-between",
+          boxSizing: "border-box", padding: "10px", alignItems: "center"
         }}>
           <h2 style={{ color: "white", margin: "0px" }}>
             Carter's Weather Map
@@ -57,14 +56,7 @@ export default function App(props: any) {
           </div>
         </div>
         <div style={{ height: "75%", display: "flex", alignItems: "flex-end" }}>
-          <TextField
-            variant="outlined"
-            placeholder="Search"
-            InputProps={{
-              endAdornment: <SearchIcon sx={{ color: "white" }} />
-            }}
-            sx={{marginLeft: "20px", width: "50%"}}
-          />
+          <SearchBar />
         </div>
       </div>
       <div style={{ height: "80%", width: "100%", display: "flex", flexDirection: "row" }}>
@@ -76,6 +68,5 @@ export default function App(props: any) {
         </div>
       </div>
     </div>
-
   );
 }
