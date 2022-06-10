@@ -5,19 +5,26 @@ import React, { useRef } from "react";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
-export default function WeatherMap(props: any) {
+let map: Map, view: MapView;
 
+export default function WeatherMap(props: any) {
     const mapDiv = useRef(null);
+    
+    function setCoordinates(rawPosition: any) {
+        props.setUserCoords({ lat: rawPosition.coords.latitude, long: rawPosition.coords.longitude });
+    }
 
     React.useEffect(() => {
         if (mapDiv.current) {
-            const map = new Map({
+            navigator.geolocation.getCurrentPosition(setCoordinates);
+
+            map = new Map({
                 basemap: "topo-vector"
             });
 
-            const view = new MapView({
+            view = new MapView({
                 map: map,
-                center: [-97.30, 35.28],
+                center: props.userCoords ? [props.userCoords.long, props.userCoords.lat] : [-98.583333, 39.833333],
                 zoom: 5,
                 constraints: {
                     rotationEnabled: false
@@ -32,7 +39,16 @@ export default function WeatherMap(props: any) {
 
             view.ui.add("search-div", "top-left");
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Center map on user's location if possible
+    React.useEffect(() => {
+        if (props.userCoords) {
+            view.goTo([props.userCoords.long, props.userCoords.lat]);
+            view.scale = 100000;
+        }
+    }, [props.userCoords]);
 
     return (
         <div id="mapDiv" ref={mapDiv} style={{ display: "flex", width: "100%", boxShadow: "0px 5px 10px #151515", margin: "0px 0px 20px 20px" }}>
