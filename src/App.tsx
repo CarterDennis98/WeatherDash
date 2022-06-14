@@ -3,7 +3,6 @@ import './App.css';
 import Conditions from "./components/conditions-bar";
 import Header from "./components/header";
 import InfoPanel from './components/info-panel';
-import SearchBar from './components/search-bar';
 import WeatherMap from "./components/weather-map";
 
 // Function to load a script, in this case it's used to load Google's places API
@@ -51,9 +50,7 @@ export default function App(props: any) {
         <WeatherMap
           userCoords={userCoords}
           setUserCoords={setUserCoords}
-        >
-          <SearchBar />
-        </WeatherMap>
+        />
         <InfoPanel />
       </div>
     </div>

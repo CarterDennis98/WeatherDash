@@ -37,7 +37,7 @@ export default function Conditions(props: any) {
     return (
         <div style={{ height: "70%", width: "100%", backgroundColor: "#2b2b2b", margin: "20px", boxShadow: "0px 5px 10px #151515" }}>
             <div style={{ display: "flex", flexDirection: "row", paddingLeft: "5px", height: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "100%" }}>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "100%", alignItems: "center" }}>
                     <div style={{ height: "100%", display: "flex", alignItems: "center" }}>
                         <img src={userForecast ? userForecast.properties.periods[0].icon : ""} alt=""></img>
                     </div>
@@ -81,7 +81,7 @@ export default function Conditions(props: any) {
                                 </p>
                             </div>
                         </div>
-                        <div style={{display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px"}}>
+                        <div style={{ display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px" }}>
                             <p style={{ color: "white", margin: 0 }}>
                                 {"Temperature: "}
                                 <b style={{ fontWeight: "500" }}>
@@ -94,7 +94,7 @@ export default function Conditions(props: any) {
                                     {userForecast ? userForecast.properties.periods[0].windDirection + " " + userForecast.properties.periods[0].windSpeed : ""}
                                 </b>
                             </p>
-                            <p style={{color: "white", margin: 0, fontSize: "small"}}>
+                            <p style={{ color: "white", margin: 0, fontSize: "small" }}>
                                 {userForecast ? userForecast.properties.periods[0].detailedForecast : ""}
                             </p>
                         </div>
@@ -110,7 +110,7 @@ export default function Conditions(props: any) {
                                 </p>
                             </div>
                         </div>
-                        <div style={{display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px"}}>
+                        <div style={{ display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px" }}>
                             <p style={{ color: "white", margin: 0 }}>
                                 {"Temperature: "}
                                 <b style={{ fontWeight: "500" }}>
@@ -123,7 +123,7 @@ export default function Conditions(props: any) {
                                     {userForecast ? userForecast.properties.periods[1].windDirection + " " + userForecast.properties.periods[0].windSpeed : ""}
                                 </b>
                             </p>
-                            <p style={{color: "white", margin: 0, fontSize: "small"}}>
+                            <p style={{ color: "white", margin: 0, fontSize: "small" }}>
                                 {userForecast ? userForecast.properties.periods[1].detailedForecast : ""}
                             </p>
                         </div>

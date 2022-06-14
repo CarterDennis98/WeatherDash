@@ -7,9 +7,10 @@ import { makeStyles } from "@mui/styles";
 const searchBarStyle = makeStyles(() => ({
     root: {
         width: "400px",
-        borderRadius: "0.25rem",
+        borderRadius: "rem",
         "& .MuiOutlinedInput-root": {
-            backgroundColor: "#6e6e6e80"
+            backgroundColor: "#4a4a4a",
+            borderRadius: "2rem"
         },
         "& .MuiOutlinedInput-input": {
             color: "white"
@@ -25,22 +26,21 @@ export default function SearchBar(props: any) {
     }
 
     return (
-        <div id="search-div" style={{ borderRadius: "0.25rem" }}>
-            <TextField
-                onChange={onChange}
-                variant="outlined"
-                placeholder="Search"
-                InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                        {
-                            <IconButton onClick={() => console.log("search")} sx={{ color: "white" }}>
-                                <SearchIcon />
-                            </IconButton>
-                        }
-                    </InputAdornment>
-                }}
-                className={searchBarClasses.root}
-            />
-        </div>
+        <TextField
+            onChange={onChange}
+            variant="outlined"
+            placeholder="Search"
+            size="small"
+            InputProps={{
+                endAdornment: <InputAdornment position="end">
+                    {
+                        <IconButton onClick={() => console.log("search")} sx={{ color: "white" }}>
+                            <SearchIcon />
+                        </IconButton>
+                    }
+                </InputAdornment>
+            }}
+            className={searchBarClasses.root}
+        />
     )
 }

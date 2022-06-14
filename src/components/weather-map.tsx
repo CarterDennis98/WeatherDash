@@ -36,8 +36,6 @@ export default function WeatherMap(props: any) {
                     ]
                 }
             });
-
-            view.ui.add("search-div", "top-left");
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
