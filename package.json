@@ -17,7 +17,10 @@
     "@types/react": "^18.0.10",
     "@types/react-dom": "^18.0.5",
     "arcgis-js-api": "^4.23.7",
+    "autosuggest-highlight": "^3.2.1",
     "axios": "^0.27.2",
+    "google-maps": "^4.3.3",
+    "lodash": "^4.17.21",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
@@ -48,5 +51,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/autosuggest-highlight": "^3.2.0",
+    "@types/lodash": "^4.14.182"
   }
 }
