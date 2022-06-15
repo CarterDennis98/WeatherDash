@@ -10,7 +10,10 @@ export default function Header(props: any) {
             boxSizing: "border-box", padding: "10px", alignItems: "center"
         }}>
             <div>
-                <SearchBar />
+                <SearchBar
+                    userCoords={props.userCoords}
+                    setCoords={props.setCoords}
+                />
             </div>
             <div>
                 <IconButton sx={{ color: "white" }} onClick={() => window.open("https://github.com/CarterDennis98", "_blank")}>

@@ -12,6 +12,7 @@ export default function WeatherMap(props: any) {
     
     function setCoordinates(rawPosition: any) {
         props.setUserCoords({ lat: rawPosition.coords.latitude, long: rawPosition.coords.longitude });
+        props.setCoords({ lat: rawPosition.coords.latitude, long: rawPosition.coords.longitude });
     }
 
     React.useEffect(() => {
@@ -24,7 +25,7 @@ export default function WeatherMap(props: any) {
 
             view = new MapView({
                 map: map,
-                center: props.userCoords ? [props.userCoords.long, props.userCoords.lat] : [-98.583333, 39.833333],
+                center: props.coords ? [props.coords.long, props.coords.lat] : [-98.583333, 39.833333],
                 zoom: 5,
                 constraints: {
                     rotationEnabled: false
@@ -40,13 +41,13 @@ export default function WeatherMap(props: any) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Center map on user's location if possible
+    // Center map on location if possible
     React.useEffect(() => {
-        if (props.userCoords) {
-            view.goTo([props.userCoords.long, props.userCoords.lat]);
-            view.scale = 100000;
+        if (props.coords) {
+            view.goTo([props.coords.long, props.coords.lat]);
+            view.zoom = 13;
         }
-    }, [props.userCoords]);
+    }, [props.coords]);
 
     return (
         <div id="mapDiv" ref={mapDiv} style={{ display: "flex", width: "100%", boxShadow: "0px 5px 10px #151515", margin: "0px 0px 20px 20px" }}>
