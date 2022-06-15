@@ -1,4 +1,5 @@
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Paper } from '@mui/material';
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -8,6 +9,10 @@ import { makeStyles } from '@mui/styles';
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import * as React from "react";
+
+const customPaper = (props: any) => {
+    return <Paper sx={{ backgroundColor: "#4a4a4a", backgroundImage: "none" }} {...props} elevation={5} />
+}
 
 const searchBarStyle = makeStyles(() => ({
     root: {
@@ -22,18 +27,6 @@ const searchBarStyle = makeStyles(() => ({
         }
     }
 }));
-
-function loadScript(src: string, position: HTMLElement | null, id: string) {
-    if (!position) {
-        return;
-    }
-
-    const script = document.createElement("script");
-    script.setAttribute("async", "");
-    script.setAttribute("id", id);
-    script.src = src;
-    position.appendChild(script);
-}
 
 const autocompleteService = { current: null };
 
@@ -57,26 +50,17 @@ export default function SearchBar(props: any) {
     const [value, setValue] = React.useState<PlaceType | null>(null);
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-    const loaded = React.useRef(false);
-
-    if (typeof window !== "undefined" && !loaded.current) {
-        if (!document.querySelector("#google-maps")) {
-            loadScript(
-                `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`,
-                document.querySelector("head"),
-                "google-maps",
-            );
-        }
-
-        loaded.current = true;
-    }
 
     // Get place predictions from Google Places API
     const fetch = React.useMemo(
         () =>
             throttle(
                 (
-                    request: { input: string },
+                    request: {
+                        input: string,
+                        types: ["(cities)"],
+                        componentRestrictions: { "country": "us" }
+                    },
                     callback: (results?: readonly PlaceType[]) => void,
                 ) => {
                     (autocompleteService.current as any).getPlacePredictions(
@@ -106,7 +90,11 @@ export default function SearchBar(props: any) {
             return undefined;
         }
 
-        fetch({ input: inputValue }, (results?: readonly PlaceType[]) => {
+        fetch({
+            input: inputValue,
+            types: ["(cities)"],
+            componentRestrictions: { "country": "us" }
+        }, (results?: readonly PlaceType[]) => {
             if (active) {
                 let newOptions: readonly PlaceType[] = [];
 
@@ -130,15 +118,17 @@ export default function SearchBar(props: any) {
     return (
         <Autocomplete
             size="small"
-            sx={{width: "500px"}}
+            PaperComponent={customPaper}
+            sx={{ width: "500px" }}
             getOptionLabel={(option) =>
                 typeof option === "string" ? option : option.description
             }
-            filterOptions={(x) => x}
+            filterOptions={(option) => option}
             options={options}
             autoComplete
             includeInputInList
             filterSelectedOptions
+            noOptionsText={<span style={{ color: "#969696" }}>No Options</span>}
             value={value}
             onChange={(event: any, newValue: PlaceType | null) => {
                 setOptions(newValue ? [newValue, ...options] : options);
@@ -148,7 +138,12 @@ export default function SearchBar(props: any) {
                 setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-                <TextField className={searchBarClasses.root} {...params} fullWidth placeholder="Search Locations" />
+                <TextField
+                    {...params}
+                    className={searchBarClasses.root}
+                    fullWidth
+                    placeholder="Search Locations"
+                />
             )}
             renderOption={(props, option) => {
                 const matches = option.structured_formatting.main_text_matched_substrings;
@@ -158,12 +153,12 @@ export default function SearchBar(props: any) {
                 );
 
                 return (
-                    <li {...props}>
+                    <li {...props} className="test">
                         <Grid container alignItems="center">
                             <Grid item>
                                 <Box
                                     component={LocationOnIcon}
-                                    sx={{ color: "text.secondary", mr: 2 }}
+                                    sx={{ color: "white", mr: 2 }}
                                 />
                             </Grid>
                             <Grid item xs>
@@ -172,12 +167,13 @@ export default function SearchBar(props: any) {
                                         key={index}
                                         style={{
                                             fontWeight: part.highlight ? 700 : 400,
+                                            color: "white"
                                         }}
                                     >
                                         {part.text}
                                     </span>
                                 ))}
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" color="#969696">
                                     {option.structured_formatting.secondary_text}
                                 </Typography>
                             </Grid>
