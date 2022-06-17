@@ -1,4 +1,6 @@
 import esriConfig from "@arcgis/core/config";
+import Point from '@arcgis/core/geometry/Point';
+import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import React, { useRef } from "react";
@@ -9,7 +11,7 @@ let map: Map, view: MapView;
 
 export default function WeatherMap(props: any) {
     const mapDiv = useRef(null);
-    
+
     function setCoordinates(rawPosition: any) {
         props.setUserCoords({ lat: rawPosition.coords.latitude, long: rawPosition.coords.longitude });
         props.setCoords({ lat: rawPosition.coords.latitude, long: rawPosition.coords.longitude });
@@ -37,8 +39,30 @@ export default function WeatherMap(props: any) {
                     ]
                 }
             });
+
+            if (props.userCoords) {
+                // Add point at user location
+                const userLocationPoint = new Point({
+                    latitude: props.userCoords.lat,
+                    longitude: props.userCoords.long
+                });
+                const pointSymbol = {
+                    type: "simple-marker",
+                    color: "#4287f5",
+                    size: "14px",
+                    outline: {
+                        color: "white",
+                        width: "2px"
+                    }
+                }
+                const userLocationPointGraphic = new Graphic({
+                    geometry: userLocationPoint,
+                    symbol: pointSymbol,
+                });
+                view.graphics.add(userLocationPointGraphic);
+            }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Center map on location if possible
