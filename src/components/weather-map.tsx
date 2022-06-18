@@ -39,28 +39,6 @@ export default function WeatherMap(props: any) {
                     ]
                 }
             });
-
-            if (props.userCoords) {
-                // Add point at user location
-                const userLocationPoint = new Point({
-                    latitude: props.userCoords.lat,
-                    longitude: props.userCoords.long
-                });
-                const pointSymbol = {
-                    type: "simple-marker",
-                    color: "#4287f5",
-                    size: "14px",
-                    outline: {
-                        color: "white",
-                        width: "2px"
-                    }
-                }
-                const userLocationPointGraphic = new Graphic({
-                    geometry: userLocationPoint,
-                    symbol: pointSymbol,
-                });
-                view.graphics.add(userLocationPointGraphic);
-            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -72,6 +50,30 @@ export default function WeatherMap(props: any) {
             view.zoom = 13;
         }
     }, [props.coords]);
+
+    // Plot point on map at user's location
+    React.useEffect(() => {
+        if (props.userCoords) {
+            const userLocationPoint = new Point({
+                latitude: props.userCoords.lat,
+                longitude: props.userCoords.long
+            });
+            const pointSymbol = {
+                type: "simple-marker",
+                color: "#4287f5",
+                size: "14px",
+                outline: {
+                    color: "white",
+                    width: "2px"
+                }
+            }
+            const userLocationPointGraphic = new Graphic({
+                geometry: userLocationPoint,
+                symbol: pointSymbol,
+            });
+            view.graphics.add(userLocationPointGraphic);
+        }
+    }, [props.userCoords]);
 
     return (
         <div id="mapDiv" ref={mapDiv} style={{ display: "flex", width: "100%", boxShadow: "0px 5px 10px #151515", margin: "0px 0px 20px 20px" }}>
