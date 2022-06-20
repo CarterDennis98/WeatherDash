@@ -4,6 +4,8 @@ import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import React, { useRef } from "react";
+import { watchesAndWarnings } from "../layers/watches-warnings";
+import { spcOutlook } from "../layers/outlook";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
@@ -22,8 +24,10 @@ export default function WeatherMap(props: any) {
             navigator.geolocation.getCurrentPosition(setCoordinates);
 
             map = new Map({
-                basemap: "topo-vector"
+                basemap: "topo-vector",
+                layers: [spcOutlook, watchesAndWarnings]
             });
+            console.log(spcOutlook)
 
             view = new MapView({
                 map: map,
