@@ -3,8 +3,8 @@ import Point from '@arcgis/core/geometry/Point';
 import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
+import LayerList from "@arcgis/core/widgets/LayerList";
 import React, { useRef } from "react";
-import { watchesAndWarnings } from "../layers/watches-warnings";
 import { spcOutlook } from "../layers/outlook";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
@@ -25,9 +25,8 @@ export default function WeatherMap(props: any) {
 
             map = new Map({
                 basemap: "topo-vector",
-                layers: [spcOutlook, watchesAndWarnings]
+                layers: [spcOutlook, /*watchesAndWarnings*/]
             });
-            console.log(spcOutlook)
 
             view = new MapView({
                 map: map,
@@ -43,6 +42,14 @@ export default function WeatherMap(props: any) {
                     ]
                 }
             });
+
+            let layerList = new LayerList({
+                view: view
+            });
+
+            view.ui.add(layerList, {
+                position: "bottom-right"
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -53,6 +60,7 @@ export default function WeatherMap(props: any) {
             view.goTo([props.coords.long, props.coords.lat]);
             view.zoom = 13;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.coords]);
 
     // Plot point on map at user's location
@@ -77,6 +85,7 @@ export default function WeatherMap(props: any) {
             });
             view.graphics.add(userLocationPointGraphic);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.userCoords]);
 
     return (
