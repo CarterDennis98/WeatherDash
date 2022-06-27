@@ -6,6 +6,7 @@ import MapView from "@arcgis/core/views/MapView";
 import LayerList from "@arcgis/core/widgets/LayerList";
 import React, { useRef } from "react";
 import { spcOutlook } from "../layers/outlook";
+import { radar } from "../layers/radar";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
@@ -25,7 +26,7 @@ export default function WeatherMap(props: any) {
 
             map = new Map({
                 basemap: "topo-vector",
-                layers: [spcOutlook, /*watchesAndWarnings*/]
+                layers: [spcOutlook, radar, /*watchesAndWarnings*/]
             });
 
             view = new MapView({
