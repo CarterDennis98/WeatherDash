@@ -32,7 +32,7 @@ export const watchesWarnings = new MapImageLayer({
     title: "Watches + Warnings",
     url: "https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer",
     opacity: 0.7,
-    refreshInterval: 1,
+    refreshInterval: 0.25,
     sublayers: [
         {
             title: "Watches and Warnings",

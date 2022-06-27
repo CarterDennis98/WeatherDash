@@ -53,29 +53,40 @@ export default function WeatherMap(props: any) {
             container: "info-panel"
         });
 
-        // Highlight MapImageLayer polygons on click
-        view.popup.watch("selectedFeature", function (graphic) {
-            if (graphic) {
-                view.graphics.removeAll();
-                var highlight = view.highlightOptions;
-                graphic.symbol = {
-                    type: "simple-fill",
-                    color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.fillOpacity],
-                    outline: {
-                        color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.color?.a],
-                        width: 1
-                    }
-                };
-                view.graphics.add(graphic)
-            } else {
-                view.graphics.removeAll();
+        // Wait for view to be created
+        view.when(function () {
+            // Highlight MapImageLayer polygons on click
+            view.popup.watch("selectedFeature", function (graphic) {
+                if (graphic) {
+                    view.graphics.removeAll();
+                    var highlight = view.highlightOptions;
+                    graphic.symbol = {
+                        type: "simple-fill",
+                        color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.fillOpacity],
+                        outline: {
+                            color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.color?.a],
+                            width: 1
+                        }
+                    };
+                    view.graphics.add(graphic)
+                } else {
+                    view.graphics.removeAll();
+                }
+            });
+            view.popup.watch("visible", function (visible) {
+                if (!visible) {
+                    view.graphics.removeAll();
+                }
+            });
+
+            // Force popups to auto dock top left
+            view.popup.dockEnabled = true;
+            view.popup.dockOptions = {
+                buttonEnabled: true,
+                position: "top-left"
             }
         });
-        view.popup.watch("visible", function (visible) {
-            if (!visible) {
-                view.graphics.removeAll();
-            }
-        });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
