@@ -9,7 +9,7 @@ import { spcOutlook } from "../layers/outlook";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
-let map: Map, view: MapView;
+let map: Map, view: MapView, layerList: LayerList;
 
 export default function WeatherMap(props: any) {
     const mapDiv = useRef(null);
@@ -42,15 +42,13 @@ export default function WeatherMap(props: any) {
                     ]
                 }
             });
-
-            let layerList = new LayerList({
-                view: view
-            });
-
-            view.ui.add(layerList, {
-                position: "bottom-right"
-            });
         }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        layerList = new LayerList({
+            view: view,
+            container: "info-panel"
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

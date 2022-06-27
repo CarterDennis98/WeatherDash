@@ -192,7 +192,7 @@ export default function SearchBar(props: any) {
                 );
 
                 return (
-                    <li {...props} className="test">
+                    <li {...props} className="search-result">
                         <Grid container alignItems="center">
                             <Grid item>
                                 <Box

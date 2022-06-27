@@ -1,7 +1,35 @@
-.test {
+.search-result {
     padding: 5px 5px 5px 15px
 }
-.test:hover {
-    background: #2b2b2b54!important;
+
+.search-result:hover {
+    background: #2b2b2b54 !important;
     cursor: pointer;
+}
+
+.esri-widget *:focus-visible,
+.esri-widget *:focus {
+    outline: none !important;
+}
+
+.esri-layer-list__item {
+    background-color: #2b2b2b;
+    color: white;
+    border-bottom: none;
+}
+
+.esri-layer-list__item-toggle {
+    padding: 0 3px;
+    cursor: pointer;
+    color: white;
+}
+
+.esri-layer-list__child-toggle {
+    color: white;
+    width: 15px;
+    cursor: pointer;
+}
+
+.esri-layer-list__no-items {
+    display: none;
 }
