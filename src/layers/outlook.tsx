@@ -4,6 +4,7 @@ export const spcOutlook = new MapImageLayer({
     title: "SPC Convective Outlooks",
     url: "https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/SPC_wx_outlks/MapServer",
     opacity: 0.7,
+    refreshInterval: 10,
     sublayers: [
         {
             title: "Day 4-8",

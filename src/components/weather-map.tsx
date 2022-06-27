@@ -5,8 +5,10 @@ import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import LayerList from "@arcgis/core/widgets/LayerList";
 import React, { useRef } from "react";
+import { customGraphics } from "../layers/graphics";
 import { spcOutlook } from "../layers/outlook";
 import { radar } from "../layers/radar";
+import { watchesWarnings } from "../layers/watches-warnings";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
@@ -26,7 +28,7 @@ export default function WeatherMap(props: any) {
 
             map = new Map({
                 basemap: "topo-vector",
-                layers: [spcOutlook, radar, /*watchesAndWarnings*/]
+                layers: [spcOutlook, radar, watchesWarnings, customGraphics]
             });
 
             view = new MapView({
@@ -49,6 +51,30 @@ export default function WeatherMap(props: any) {
         layerList = new LayerList({
             view: view,
             container: "info-panel"
+        });
+
+        // Highlight MapImageLayer polygons on click
+        view.popup.watch("selectedFeature", function (graphic) {
+            if (graphic) {
+                view.graphics.removeAll();
+                var highlight = view.highlightOptions;
+                graphic.symbol = {
+                    type: "simple-fill",
+                    color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.fillOpacity],
+                    outline: {
+                        color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.color?.a],
+                        width: 1
+                    }
+                };
+                view.graphics.add(graphic)
+            } else {
+                view.graphics.removeAll();
+            }
+        });
+        view.popup.watch("visible", function (visible) {
+            if (!visible) {
+                view.graphics.removeAll();
+            }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -82,7 +108,7 @@ export default function WeatherMap(props: any) {
                 geometry: userLocationPoint,
                 symbol: pointSymbol,
             });
-            view.graphics.add(userLocationPointGraphic);
+            customGraphics.add(userLocationPointGraphic);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.userCoords]);
