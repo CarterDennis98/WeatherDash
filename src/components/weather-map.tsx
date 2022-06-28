@@ -65,10 +65,10 @@ export default function WeatherMap(props: any) {
                         color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.fillOpacity],
                         outline: {
                             color: [highlight.color?.r, highlight.color?.g, highlight.color?.b, highlight.color?.a],
-                            width: 1
+                            width: 2
                         }
                     };
-                    view.graphics.add(graphic)
+                    view.graphics.add(graphic);
                 } else {
                     view.graphics.removeAll();
                 }
