@@ -94,7 +94,7 @@ export default function WeatherMap(props: any) {
     React.useEffect(() => {
         if (props.coords) {
             view.goTo([props.coords.long, props.coords.lat]);
-            view.zoom = 13;
+            view.zoom = 10;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.coords]);
