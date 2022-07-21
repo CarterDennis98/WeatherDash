@@ -1,9 +1,9 @@
 import React from "react";
 import Conditions from "./components/conditions-bar";
 import Header from "./components/header";
-import InfoPanel from './components/info-panel';
+import InfoPanel from "./components/info-panel";
 import WeatherMap from "./components/weather-map";
-import './styles.css';
+import "./styles/styles.css";
 
 export default function App(props: any) {
   // State to hold user's current location

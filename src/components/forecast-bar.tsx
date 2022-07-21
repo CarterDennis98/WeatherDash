@@ -1,4 +1,4 @@
-import React from "react";
+import "../styles/scrollbar.css";
 import ForecastConditions from "./forecast-conditions";
 
 export default function ForecastBar(props: any) {
