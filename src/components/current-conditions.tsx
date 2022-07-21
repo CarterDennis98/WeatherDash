@@ -7,7 +7,7 @@ function degToCompass(deg: number) {
 export default function CurrentConditions(props: any) {
 
     return (
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "100%", alignItems: "center" }}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "50%", alignItems: "center" }}>
             <div style={{ height: "100%", display: "flex", alignItems: "center" }}>
                 <img src={props.forecast ? props.forecast.properties.periods[0].icon : ""} alt=""></img>
             </div>

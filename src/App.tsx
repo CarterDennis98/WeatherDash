@@ -18,7 +18,7 @@ export default function App(props: any) {
           userCoords={userCoords}
           setCoords={setCoords}
         />
-        <div style={{ height: "75%", display: "flex", alignItems: "flex-end" }}>
+        <div style={{ height: "75%", display: "flex" }}>
           <Conditions
             coords={coords}
           />

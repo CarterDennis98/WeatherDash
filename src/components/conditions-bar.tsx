@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import CurrentConditions from "./current-conditions";
-import ForecastConditions from "./forecast-conditions";
+import ForecastBar from "./forecast-bar";
 
 export default function Conditions(props: any) {
     const [location, setLocation] = React.useState<{ city: string, county: string, state: string }>();
@@ -31,20 +31,15 @@ export default function Conditions(props: any) {
     }, [props.coords]);
 
     return (
-        <div style={{ height: "70%", width: "100%", backgroundColor: "#2b2b2b", margin: "20px", boxShadow: "0px 5px 10px #151515" }}>
+        <div style={{ height: "80%", width: "100%", backgroundColor: "#2b2b2b", margin: "20px", boxShadow: "0px 5px 10px #151515", overflow: "hidden" }}>
             <div style={{ display: "flex", flexDirection: "row", paddingLeft: "5px", height: "100%", justifyContent: "space-between", alignItems: "center" }}>
                 <CurrentConditions
                     forecast={forecast}
                     conditions={conditions}
                     location={location}
                 />
-                <ForecastConditions
+                <ForecastBar
                     forecast={forecast}
-                    period={0}
-                />
-                <ForecastConditions
-                    forecast={forecast}
-                    period={1}
                 />
             </div>
         </div>
