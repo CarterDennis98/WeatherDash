@@ -13,12 +13,12 @@ export default function App(props: any) {
 
   return (
     <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", background: "#4a4a4a" }}>
-      <div style={{ height: "20%", width: "100%" }}>
+      <div style={{ height: "20%", width: "100%", display: "flex", flexDirection: "column" }}>
         <Header
           userCoords={userCoords}
           setCoords={setCoords}
         />
-        <div style={{ height: "75%", display: "flex" }}>
+        <div style={{ height: "75%", display: "flex", alignItems: "center" }}>
           <Conditions
             coords={coords}
           />
