@@ -1,4 +1,6 @@
 import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
+import "../styles/tooltip.css";
 
 export default function ForecastConditions(props: any) {
     let forecast = props.forecast ? props.forecast.properties.periods[props.period] : null;
@@ -26,8 +28,10 @@ export default function ForecastConditions(props: any) {
                             {forecast ? forecast.shortForecast : ""}
                         </p>
                     </div>
-                    <Tooltip title={forecast ? forecast.detailedForecast : ""}>
-                        <p style={{ color: "white", margin: 0, textDecoration: "underline", cursor: "default" }}><i>More Info</i></p>
+                    <Tooltip TransitionComponent={Zoom} followCursor={true} title={forecast ? forecast.detailedForecast : ""}>
+                        <p style={{ color: "white", margin: 0, cursor: "default", fontSize: "12px" }}>
+                            <i>More Info</i>
+                        </p>
                     </Tooltip>
                 </div>
             </div>

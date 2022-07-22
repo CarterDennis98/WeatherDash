@@ -138,7 +138,7 @@ export default function SearchBar(props: any) {
     }, [value]);
 
     const handleUseMyLocation = () => {
-        props.setCoords({lat: props.userCoords.lat, long: props.userCoords.long});
+        props.setCoords({ lat: props.userCoords.lat, long: props.userCoords.long });
         setValue(null);
     }
 
@@ -146,7 +146,7 @@ export default function SearchBar(props: any) {
         <Autocomplete
             size="small"
             PaperComponent={customPaper}
-            sx={{ width: "500px" }}
+            sx={{ width: "400px" }}
             getOptionLabel={(option) =>
                 typeof option === "string" ? option : option.description
             }
