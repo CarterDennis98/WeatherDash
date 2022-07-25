@@ -8,26 +8,34 @@ export default function Conditions(props: any) {
     const [conditions, setConditions] = React.useState<any>();
     const [forecast, setForecast] = React.useState<any>();
 
-    // Reverse GeoCode user's location
+    async function getWeatherInfo() {
+        // Get current conditions for user's location
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${props.coords.lat}&lon=${props.coords.long}&appid=${process.env.REACT_APP_OPENWEATHERMAP_KEY}&units=imperial`)
+            .then(async function (response) {
+                setConditions(response.data);
+            });
+
+        // Get forecast for user's location
+        axios.get(`https://api.weather.gov/points/${props.coords.lat},${props.coords.long}`).then(async function (response) {
+            axios.get(`${response.data.properties.forecast}`).then(async function (response) {
+                setForecast(response.data);
+            });
+        });
+    }
+
+    // Gather information on user location and forecast
     React.useEffect(() => {
         if (props.coords) {
+            // Reverse GeoCode user's location
             axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${props.coords.lat}&lon=${props.coords.long}&zoom=10&format=json`).then(async function (response) {
                 setLocation({ city: response.data.address.city, county: response.data.address.county, state: response.data.address.state });
 
-                // Get current conditions for user's location
-                axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${props.coords.lat}&lon=${props.coords.long}&appid=${process.env.REACT_APP_OPENWEATHERMAP_KEY}&units=imperial`)
-                    .then(async function (response) {
-                        setConditions(response.data);
-                    });
-
-                // Get forecast for user's location
-                axios.get(`https://api.weather.gov/points/${props.coords.lat},${props.coords.long}`).then(async function (response) {
-                    axios.get(`${response.data.properties.forecast}`).then(async function (response) {
-                        setForecast(response.data);
-                    });
+                getWeatherInfo().then(function () {
+                    setInterval(getWeatherInfo, 60000);
                 });
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.coords]);
 
     return (

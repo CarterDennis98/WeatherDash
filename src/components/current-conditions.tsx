@@ -6,7 +6,7 @@ function degToCompass(deg: number) {
 
 export default function CurrentConditions(props: any) {
 
-    return (
+    return props.forecast && props.conditions ? (
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", minWidth: "500px", alignItems: "center" }}>
             <div style={{ height: "100%", display: "flex", alignItems: "center" }}>
                 <img src={props.forecast ? props.forecast.properties.periods[0].icon : ""} alt=""></img>
@@ -42,5 +42,7 @@ export default function CurrentConditions(props: any) {
                 </div>
             </div>
         </div>
+    ) : (
+        null
     )
 }
