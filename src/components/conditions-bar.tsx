@@ -31,7 +31,7 @@ export default function Conditions(props: any) {
                 setLocation({ city: response.data.address.city, county: response.data.address.county, state: response.data.address.state });
 
                 getWeatherInfo().then(function () {
-                    setInterval(getWeatherInfo, 60000);
+                    setInterval(getWeatherInfo, 300000);
                 });
             });
         }
