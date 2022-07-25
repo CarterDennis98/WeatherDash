@@ -7,6 +7,7 @@ export default function Conditions(props: any) {
     const [location, setLocation] = React.useState<{ city: string, county: string, state: string }>();
     const [conditions, setConditions] = React.useState<any>();
     const [forecast, setForecast] = React.useState<any>();
+    const [alerts, setAlerts] = React.useState<any>();
 
     async function getWeatherInfo() {
         // Get current conditions for user's location
@@ -17,6 +18,10 @@ export default function Conditions(props: any) {
 
         // Get forecast for user's location
         axios.get(`https://api.weather.gov/points/${props.coords.lat},${props.coords.long}`).then(async function (response) {
+            axios.get(`https://api.weather.gov/alerts/active/zone/${(response.data.properties.forecastZone).split("/").pop()}`).then(async function (response) {
+                setAlerts(response.data.features);
+            });
+
             axios.get(`${response.data.properties.forecast}`).then(async function (response) {
                 setForecast(response.data);
             });
@@ -45,6 +50,7 @@ export default function Conditions(props: any) {
                     forecast={forecast}
                     conditions={conditions}
                     location={location}
+                    alerts={alerts}
                 />
                 <ForecastBar
                     forecast={forecast}

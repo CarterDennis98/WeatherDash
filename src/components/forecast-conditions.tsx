@@ -28,8 +28,8 @@ export default function ForecastConditions(props: any) {
                             {forecast ? forecast.shortForecast : ""}
                         </p>
                     </div>
-                    <Tooltip TransitionComponent={Zoom} followCursor={true} title={forecast ? forecast.detailedForecast : ""}>
-                        <p style={{ color: "white", margin: 0, cursor: "default", fontSize: "12px" }}>
+                    <Tooltip TransitionComponent={Zoom} title={forecast ? forecast.detailedForecast : ""}>
+                        <p style={{ color: "white", margin: 0, cursor: "default", fontSize: "12px", width: "fit-content" }}>
                             <i>More Info</i>
                         </p>
                     </Tooltip>

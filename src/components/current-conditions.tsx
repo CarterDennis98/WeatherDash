@@ -1,3 +1,7 @@
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import Tooltip from '@mui/material/Tooltip';
+import AlertTooltip from './alert-tooltip';
+
 function degToCompass(deg: number) {
     var val = Math.floor((deg / 22.5) + 0.5);
     var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
@@ -12,9 +16,35 @@ export default function CurrentConditions(props: any) {
                 <img src={props.forecast ? props.forecast.properties.periods[0].icon : ""} alt=""></img>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-                <p style={{ color: "white", fontSize: "x-large", margin: "0", marginLeft: "5px", fontWeight: "500" }}>
-                    {props.conditions && props.location ? props.location.city + ", " + props.location.state : ""}
-                </p>
+                <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <p style={{ color: "white", fontSize: "x-large", margin: "0", marginLeft: "5px", fontWeight: "500" }}>
+                        {props.conditions && props.location ? props.location.city + ", " + props.location.state : ""}
+                    </p>
+                    {props.alerts && props.alerts.length > 0 ?
+                        <Tooltip
+                            title={
+                                <div id="tooltip" style={{overflow: "auto", maxHeight: "300px"}}>
+                                    {props.alerts.map((alert: any) => {
+                                        return (
+                                            <AlertTooltip
+                                                id={alert.id}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            }
+                            placement="bottom-start"
+                        >
+                            <ErrorOutlineIcon
+                                sx={{
+                                    color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
+                                        "red" : "orange",
+                                    marginLeft: "5px"
+                                }}
+                            />
+                        </Tooltip> : null
+                    }
+                </div>
                 <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>
                     <div style={{ display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px" }}>
                         <p style={{ color: "white", margin: 0, fontWeight: "500" }}>
