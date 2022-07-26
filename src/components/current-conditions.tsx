@@ -1,6 +1,12 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import Grow from '@mui/material/Grow';
+import IconButton from '@mui/material/IconButton';
+import Popper from '@mui/material/Popper';
 import Tooltip from '@mui/material/Tooltip';
-import AlertTooltip from './alert-tooltip';
+import Zoom from '@mui/material/Zoom';
+import * as React from "react";
+import Alert from './alert';
 
 function degToCompass(deg: number) {
     var val = Math.floor((deg / 22.5) + 0.5);
@@ -9,6 +15,14 @@ function degToCompass(deg: number) {
 }
 
 export default function CurrentConditions(props: any) {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    }
+
+    const open = Boolean(anchorEl);
+    const popperId = open ? "alert-popper" : undefined;
 
     return props.forecast && props.conditions ? (
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", minWidth: "500px", alignItems: "center" }}>
@@ -21,28 +35,49 @@ export default function CurrentConditions(props: any) {
                         {props.conditions && props.location ? props.location.city + ", " + props.location.state : ""}
                     </p>
                     {props.alerts && props.alerts.length > 0 ?
-                        <Tooltip
-                            title={
-                                <div id="tooltip" style={{overflow: "auto", maxHeight: "300px"}}>
-                                    {props.alerts.map((alert: any) => {
-                                        return (
-                                            <AlertTooltip
-                                                id={alert.id}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            }
-                            placement="bottom-start"
-                        >
-                            <ErrorOutlineIcon
-                                sx={{
-                                    color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
-                                        "red" : "orange",
-                                    marginLeft: "5px"
-                                }}
-                            />
-                        </Tooltip> : null
+                        <React.Fragment>
+                            <Tooltip title={open ? "Close" : "View Active Alerts"} placement="right" TransitionComponent={Zoom}>
+                                <IconButton onClick={handleClick} sx={{ padding: "0px", marginLeft: "5px" }} disableRipple>
+                                    {!open ?
+                                        <ErrorOutlineIcon
+                                            sx={{
+                                                color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
+                                                    "red" : "orange"
+                                            }} /> :
+                                        <ExpandLessIcon sx={{
+                                            color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
+                                                "red" : "orange"
+                                        }} />
+                                    }
+                                </IconButton>
+                            </Tooltip>
+                            <Popper id={popperId} open={open} anchorEl={anchorEl} transition>
+                                {({ TransitionProps }) => (
+                                    <Grow {...TransitionProps} timeout={200}>
+                                        <div style={{ padding: "5px", backgroundColor: "#4c4c4c", borderRadius: "4px" }}>
+                                            <div
+                                                id="alert-popper"
+                                                style={{
+                                                    overflow: "auto",
+                                                    maxHeight: "300px",
+                                                    maxWidth: "300px",
+                                                    backgroundColor: "#4c4c4c",
+                                                    borderRadius: "4px"
+                                                }}>
+                                                {props.alerts.map((alert: any, index: number) => {
+                                                    return (
+                                                        <Alert
+                                                            id={alert.id}
+                                                            last={index === props.alerts.length - 1}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </Grow>
+                                )}
+                            </Popper>
+                        </React.Fragment> : null
                     }
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>

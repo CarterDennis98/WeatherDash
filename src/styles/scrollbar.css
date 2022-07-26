@@ -22,19 +22,19 @@
 }
 
 /*Styling for tooltip scrollbar*/
-#tooltip::-webkit-scrollbar {
+#alert-popper::-webkit-scrollbar {
     width: 7px;
 }
 
-#tooltip::-webkit-scrollbar-thumb {
+#alert-popper::-webkit-scrollbar-thumb {
     background: #2b2b2b;
 }
 
-#tooltip::-webkit-scrollbar-thumb:hover {
-    background: #555;
+#alert-popper::-webkit-scrollbar-thumb:hover {
+    background: #343434;
 }
 
-#tooltip::-webkit-scrollbar-track {
+#alert-popper::-webkit-scrollbar-track {
     background: #2b2b2b;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
