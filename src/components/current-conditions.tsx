@@ -1,3 +1,4 @@
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Grow from '@mui/material/Grow';
@@ -79,6 +80,11 @@ export default function CurrentConditions(props: any) {
                             </Popper>
                         </React.Fragment> : null
                     }
+                    <Tooltip title={"Bookmarks coming soon!"} placement="right">
+                        <IconButton onClick={() => { }} sx={{ color: "white" }} disableRipple>
+                            <BookmarkBorderIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>
                     <div style={{ display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px" }}>

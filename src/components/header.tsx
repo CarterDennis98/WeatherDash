@@ -1,7 +1,23 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import IconButton from "@mui/material/IconButton";
+import BookmarkedLocation from "./bookmarked-location";
 import SearchBar from "./search-bar";
+
+const testLocations = [
+    {
+        city: "Oklahoma City",
+        state: "OK",
+        lat: 35.481918,
+        long: -97.508469
+    },
+    {
+        city: "Tulsa",
+        state: "OK",
+        lat: 36.153980,
+        long: -95.992775
+    }
+]
 
 export default function Header(props: any) {
     return (
@@ -15,7 +31,20 @@ export default function Header(props: any) {
                     setCoords={props.setCoords}
                 />
             </div>
-            <div>
+            <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "row", alignItems: "center" }}>
+                { testLocations.length > 0 ? 
+                    testLocations.map((location: any, index: number) => {
+                        return (
+                            <BookmarkedLocation
+                                location={location}
+                                last={index === testLocations.length - 1}
+                            />
+                        );
+                    }) : 
+                    null
+                }
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
                 <IconButton sx={{ color: "white" }} onClick={() => window.open("https://github.com/CarterDennis98", "_blank")}>
                     <GitHubIcon />
                 </IconButton>

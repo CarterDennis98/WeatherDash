@@ -16,12 +16,12 @@ export default function Conditions(props: any) {
                 setConditions(response.data);
             });
 
-        // Get forecast for user's location
+        // Get user's weather info from weather.gov api
         axios.get(`https://api.weather.gov/points/${props.coords.lat},${props.coords.long}`).then(async function (response) {
             axios.get(`https://api.weather.gov/alerts/active/zone/${(response.data.properties.forecastZone).split("/").pop()}`).then(async function (response) {
                 setAlerts(response.data.features);
             });
-
+            // Get forecast for user's location
             axios.get(`${response.data.properties.forecast}`).then(async function (response) {
                 setForecast(response.data);
             });
