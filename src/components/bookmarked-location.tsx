@@ -28,13 +28,16 @@ export default function BookmarkedLocation(props: any) {
     }, []);
 
     return conditions && alerts ? (
-        <div id={"bookmark " + props.location.city} style={{ display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem" }}>
+        <div id={"bookmark " + props.location.city} style={{
+            display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem",
+            maxHeight: "40px", alignItems: "center"
+        }}>
             <p style={{ color: "white" }}>
                 {Math.round(conditions.main.temp) + "\u00B0F"} {props.location.city}, {props.location.state}
             </p>
             <p
                 style={{
-                    color: "white", 
+                    color: "white",
                     backgroundColor: (alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
                         "red" : "orange",
                     borderRadius: "5rem",
