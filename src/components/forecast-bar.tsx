@@ -11,6 +11,7 @@ export default function ForecastBar(props: any) {
                         <ForecastConditions
                             forecast={props.forecast}
                             period={period.number - 1}
+                            key={period.number - 1}
                         />
                     )
                 })
