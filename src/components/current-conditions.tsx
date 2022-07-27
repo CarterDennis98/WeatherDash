@@ -9,10 +9,35 @@ import Zoom from '@mui/material/Zoom';
 import * as React from "react";
 import Alert from './alert';
 
+enum SeverityColor {
+    Extreme = "800000",
+    Severe = "red",
+    Moderate = "orange",
+    Minor = "yellow",
+    Unknown = "white"
+}
+
+enum SeverityName {
+    Extreme = "Extreme",
+    Severe = "Severe",
+    Moderate = "Moderate",
+    Minor = "Minor",
+    Unknown = "Unknown"
+}
+
 function degToCompass(deg: number) {
     var val = Math.floor((deg / 22.5) + 0.5);
-    var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-    return (arr[(val % 16)]);
+    var dirs = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    return (dirs[(val % 16)]);
+}
+
+function getColor(alerts: Array<any>) {
+    let severities = alerts.map((alert: any) => alert.properties.severity).filter((value, index, self) => self.indexOf(value) === index);
+
+    const severityOrder = Object.values(SeverityName);
+    severities = severities.sort((a, b) => severityOrder.indexOf(a) - severityOrder.indexOf(b));
+
+    return ((SeverityColor as any)[severities[0]]);
 }
 
 export default function CurrentConditions(props: any) {
@@ -42,13 +67,12 @@ export default function CurrentConditions(props: any) {
                                     {!open ?
                                         <ErrorOutlineIcon
                                             sx={{
-                                                color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
-                                                    "red" : "orange"
+                                                color: getColor(props.alerts)
                                             }} /> :
-                                        <ExpandLessIcon sx={{
-                                            color: (props.alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
-                                                "red" : "orange"
-                                        }} />
+                                        <ExpandLessIcon
+                                            sx={{
+                                                color: getColor(props.alerts)
+                                            }} />
                                     }
                                 </IconButton>
                             </Tooltip>

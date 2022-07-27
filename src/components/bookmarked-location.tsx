@@ -2,6 +2,31 @@ import axios from "axios";
 import * as React from "react";
 import "../styles/bookmark.css";
 
+enum SeverityColor {
+    Extreme = "800000",
+    Severe = "red",
+    Moderate = "orange",
+    Minor = "yellow",
+    Unknown = "white"
+}
+
+enum SeverityName {
+    Extreme = "Extreme",
+    Severe = "Severe",
+    Moderate = "Moderate",
+    Minor = "Minor",
+    Unknown = "Unknown"
+}
+
+function getColor(alerts: Array<any>) {
+    let severities = alerts.map((alert: any) => alert.properties.severity).filter((value, index, self) => self.indexOf(value) === index);
+
+    const severityOrder = Object.values(SeverityName);
+    severities = severities.sort((a, b) => severityOrder.indexOf(a) - severityOrder.indexOf(b));
+
+    return ((SeverityColor as any)[severities[0]]);
+}
+
 export default function BookmarkedLocation(props: any) {
     const [conditions, setConditions] = React.useState<any>();
     const [alerts, setAlerts] = React.useState<any>();
@@ -38,13 +63,13 @@ export default function BookmarkedLocation(props: any) {
             <p
                 style={{
                     color: "white",
-                    backgroundColor: (alerts.filter((e: any) => e.properties.severity === "Extreme" || e.properties.severity === "Severe").length > 0) ?
-                        "red" : "orange",
+                    backgroundColor: getColor(alerts),
                     borderRadius: "5rem",
                     width: "20px",
                     marginLeft: "5px",
                     display: "flex",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    textShadow: "1px 1px 2px black"
                 }}
             >{alerts.length.toString()}</p>
         </div>
