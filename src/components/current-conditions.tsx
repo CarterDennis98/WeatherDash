@@ -58,7 +58,8 @@ export default function CurrentConditions(props: any) {
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <p style={{ color: "white", fontSize: "x-large", margin: "0", marginLeft: "5px", fontWeight: "500" }}>
-                        {props.conditions && props.location ? props.location.city + ", " + props.location.state : ""}
+                        {props.conditions && props.location ? (props.location.city ? (props.location.city + ", " + props.location.state) :
+                            props.conditions.name + ", " + props.location.state) : ""}
                     </p>
                     {props.alerts && props.alerts.length > 0 ?
                         <React.Fragment>
