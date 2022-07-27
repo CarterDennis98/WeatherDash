@@ -53,10 +53,14 @@ export default function BookmarkedLocation(props: any) {
     }, []);
 
     return conditions && alerts ? (
-        <div id={"bookmark " + props.location.city} style={{
-            display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem",
-            maxHeight: "40px", alignItems: "center"
-        }}>
+        <div
+            id={"bookmark " + props.location.city}
+            style={{
+                display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem",
+                maxHeight: "40px", alignItems: "center"
+            }}
+            onClick={() => { props.setCoords({ lat: props.location.lat, long: props.location.long }) }}
+        >
             <p style={{ color: "white" }}>
                 {Math.round(conditions.main.temp) + "\u00B0F"} {props.location.city}, {props.location.state}
             </p>

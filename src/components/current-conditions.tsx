@@ -94,6 +94,7 @@ export default function CurrentConditions(props: any) {
                                                         <Alert
                                                             id={alert.id}
                                                             last={index === props.alerts.length - 1}
+                                                            key={index}
                                                         />
                                                     );
                                                 })}

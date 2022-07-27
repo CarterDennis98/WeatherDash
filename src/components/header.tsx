@@ -38,6 +38,7 @@ export default function Header(props: any) {
                             <BookmarkedLocation
                                 location={location}
                                 last={index === testLocations.length - 1}
+                                setCoords={props.setCoords}
                                 key={index}
                             />
                         );
