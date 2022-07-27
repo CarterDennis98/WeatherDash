@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as React from "react";
+import "../styles/bookmark.css";
 
 export default function BookmarkedLocation(props: any) {
     const [conditions, setConditions] = React.useState<any>();
@@ -26,8 +27,8 @@ export default function BookmarkedLocation(props: any) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <div style={{ display: "flex", flexDirection: "row", margin: "5px" }}>
+    return conditions && alerts ? (
+        <div id={"bookmark " + props.location.city} style={{ display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem" }}>
             <p style={{ color: "white" }}>
                 {Math.round(conditions.main.temp) + "\u00B0F"} {props.location.city}, {props.location.state}
             </p>
@@ -44,5 +45,7 @@ export default function BookmarkedLocation(props: any) {
                 }}
             >{alerts.length.toString()}</p>
         </div>
+    ) : (
+        null
     );
 }
