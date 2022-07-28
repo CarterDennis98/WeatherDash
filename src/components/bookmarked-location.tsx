@@ -64,18 +64,23 @@ export default function BookmarkedLocation(props: any) {
             <p style={{ color: "white" }}>
                 {Math.round(conditions.main.temp) + "\u00B0F"} {props.location.city}, {props.location.state}
             </p>
-            <p
-                style={{
-                    color: "white",
-                    backgroundColor: getColor(alerts),
-                    borderRadius: "5rem",
-                    width: "20px",
-                    marginLeft: "5px",
-                    display: "flex",
-                    justifyContent: "center",
-                    textShadow: "1px 1px 2px black"
-                }}
-            >{alerts.length.toString()}</p>
+            {alerts.length > 0 ?
+                <p
+                    style={{
+                        color: "white",
+                        backgroundColor: getColor(alerts),
+                        borderRadius: "5rem",
+                        width: "20px",
+                        marginLeft: "5px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textShadow: "1px 1px 2px black"
+                    }}
+                >
+                    {alerts.length.toString()}
+                </p> : 
+                null
+            }
         </div>
     ) : (
         null
