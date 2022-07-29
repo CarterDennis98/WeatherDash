@@ -36,10 +36,12 @@ usersRoutes.route("/users/:id").get(function (req, res) {
 });
 
 // Create new user
-usersRoutes.route("/users/add").post(function (req, response) {
+usersRoutes.route("/users").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
-    name: req.body.name
+    email: req.body.email,
+    password: req.body.password,
+    bookmarks: req.body.bookmarks
   };
   db_connect.collection("users").insertOne(myobj, function (err, res) {
     if (err) throw err;
