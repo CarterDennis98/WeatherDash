@@ -48,8 +48,15 @@ const toggleButtonStyle = {
 }
 
 const submitStyle = {
-    root: {
-        color: "white"
+    "&.MuiButton-contained": {
+        color: "white",
+        backgroundColor: "#0079C1"
+    },
+    "&.MuiButton-contained:hover": {
+        backgroundColor: "#00B8FF"
+    },
+    "&.Mui-disabled": {
+        backgroundColor: "gray"
     }
 }
 
