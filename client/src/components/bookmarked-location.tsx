@@ -56,7 +56,7 @@ export default function BookmarkedLocation(props: any) {
         <div
             id={"bookmark " + props.location.city}
             style={{
-                display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px", borderRadius: "0.5rem",
+                display: "flex", flexDirection: "row", margin: "5px", padding: "0px 5px 0px 5px",
                 maxHeight: "40px", alignItems: "center"
             }}
             onClick={() => { props.setCoords({ lat: props.location.lat, long: props.location.long }) }}

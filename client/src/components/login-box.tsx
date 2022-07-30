@@ -91,7 +91,7 @@ export default function LoginBox(props: any) {
         <Box
             sx={{
                 height: "250px", width: "300px", borderRadius: "4px", backgroundColor: "#4c4c4c", color: "white", display: "flex",
-                flexDirection: "column", alignItems: "center"
+                flexDirection: "column", alignItems: "center", boxShadow: "5px 5px 10px #151515"
             }}
         >
             <ToggleButtonGroup

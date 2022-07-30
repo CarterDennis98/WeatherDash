@@ -1,5 +1,5 @@
 div[id^=bookmark]:hover {
-    background-color: #4c4c4c;
+    border-bottom: 2px solid white;
     cursor: pointer;
     transition: 0.1s ease-in;
 }
