@@ -67,7 +67,7 @@ const submitStyle = {
     }
 }
 
-export default function LoginBox(props: any) {
+export default function AccountBox(props: any) {
     const [task, setTask] = React.useState<string>("log in");
     const [email, setEmail] = React.useState<{ email: string, isValid: boolean }>({ email: "", isValid: false });
     const [password, setPassword] = React.useState<{ password: string, isValid: boolean }>({ password: "", isValid: false });
@@ -107,9 +107,15 @@ export default function LoginBox(props: any) {
                     email: email.email,
                     password: password.password
                 }).then(async function (response) {
-                    setEmail({ email: "", isValid: false});
+                    setEmail({ email: "", isValid: false });
                     setPassword({ password: "", isValid: false });
-                    console.log(response)
+                    if (response) {
+                        props.setUser({
+                            _id: response._id,
+                            email: response.email,
+                            bookmarks: response.bookmarks
+                        });
+                    }
                 });
             } catch (error) {
                 throw (error);
@@ -128,6 +134,10 @@ export default function LoginBox(props: any) {
         }
     }
 
+    const handleSignOut = () => {
+        props.setUser(null);
+    }
+
     return (
         <Box
             sx={{
@@ -135,58 +145,72 @@ export default function LoginBox(props: any) {
                 flexDirection: "column", alignItems: "center", boxShadow: "5px 5px 10px #151515"
             }}
         >
-            <ToggleButtonGroup
-                value={task}
-                exclusive
-                onChange={handleTaskChange}
-                sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: "center" }}
-            >
-                <ToggleButton value="log in" sx={toggleButtonStyle}>
-                    Log in
-                </ToggleButton>
-                <ToggleButton value="sign up" sx={toggleButtonStyle}>
-                    Sign up
-                </ToggleButton>
-            </ToggleButtonGroup>
-            <form style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
-                <TextField
-                    value={email.email}
-                    onChange={handleEmailChange}
-                    error={!email.isValid && email.email !== ""}
-                    helperText={!email.isValid && email.email !== "" ? "Invalid email" : ""}
-                    variant="standard"
-                    label="Email"
-                    name="email"
-                    sx={textFieldStyle}
-                />
-                <TextField
-                    value={password.password}
-                    onChange={handlePasswordChange}
-                    error={!password.isValid && password.password !== ""}
-                    helperText={!password.isValid && password.password !== "" ? "Invalid password" : ""}
-                    type="password"
-                    variant="standard"
-                    label="Password"
-                    name="password"
-                    sx={textFieldStyle}
-                />
-                <p
-                    style={{ margin: "0px", fontSize: "10px", textDecoration: "underline", cursor: "pointer" }}
-                    onClick={() => { console.log("I forgor 💀") }}
-                >
-                    Forgot password?
-                </p>
-            </form>
-            <div style={{ height: "100%", display: "flex", margin: "5px", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Button
-                    onClick={handleSubmit}
-                    variant={"contained"}
-                    disabled={!email.isValid /*|| !password.isValid*/}
-                    sx={submitStyle}
-                >
-                    Submit
-                </Button>
-            </div>
+            {props.user ?
+                <React.Fragment>
+                    <p>{props.user.email}</p>
+                    <Button
+                        onClick={handleSignOut}
+                        variant="contained"
+                        sx={submitStyle}
+                    >
+                        Sign Out
+                    </Button>
+                </React.Fragment> :
+                <React.Fragment>
+                    <ToggleButtonGroup
+                        value={task}
+                        exclusive
+                        onChange={handleTaskChange}
+                        sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: "center" }}
+                    >
+                        <ToggleButton value="log in" sx={toggleButtonStyle}>
+                            Log in
+                        </ToggleButton>
+                        <ToggleButton value="sign up" sx={toggleButtonStyle}>
+                            Sign up
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                    <form style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+                        <TextField
+                            value={email.email}
+                            onChange={handleEmailChange}
+                            error={!email.isValid && email.email !== ""}
+                            helperText={!email.isValid && email.email !== "" ? "Invalid email" : ""}
+                            variant="standard"
+                            label="Email"
+                            name="email"
+                            sx={textFieldStyle}
+                        />
+                        <TextField
+                            value={password.password}
+                            onChange={handlePasswordChange}
+                            error={!password.isValid && password.password !== ""}
+                            helperText={!password.isValid && password.password !== "" ? "Invalid password" : ""}
+                            type="password"
+                            variant="standard"
+                            label="Password"
+                            name="password"
+                            sx={textFieldStyle}
+                        />
+                        <p
+                            style={{ margin: "0px", fontSize: "10px", textDecoration: "underline", cursor: "pointer" }}
+                            onClick={() => { console.log("I forgor 💀") }}
+                        >
+                            Forgot password?
+                        </p>
+                    </form>
+                    <div style={{ height: "100%", display: "flex", margin: "5px", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                        <Button
+                            onClick={handleSubmit}
+                            variant={"contained"}
+                            disabled={!email.isValid /*|| !password.isValid*/}
+                            sx={submitStyle}
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                </React.Fragment>
+            }
         </Box>
     );
 }

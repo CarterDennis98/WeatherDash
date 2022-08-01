@@ -16,6 +16,8 @@ export default function Home(props: any) {
                 <Header
                     userCoords={userCoords}
                     setCoords={setCoords}
+                    user={props.user}
+                    setUser={props.setUser}
                 />
                 <div style={{ height: "75%", display: "flex", alignItems: "center" }}>
                     <Conditions

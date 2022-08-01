@@ -5,8 +5,8 @@ import Grow from '@mui/material/Grow';
 import IconButton from "@mui/material/IconButton";
 import Popper from '@mui/material/Popper';
 import * as React from "react";
+import AccountBox from './account-box';
 import BookmarkedLocation from "./bookmarked-location";
-import LoginBox from './login-box';
 import SearchBar from "./search-bar";
 
 const testLocations = [
@@ -68,7 +68,10 @@ export default function Header(props: any) {
                     {({ TransitionProps }) => (
                         <Grow {...TransitionProps} timeout={200}>
                             <div>
-                                <LoginBox />
+                                <AccountBox
+                                    user={props.user}
+                                    setUser={props.setUser}
+                                />
                             </div>
                         </Grow>
                     )}
