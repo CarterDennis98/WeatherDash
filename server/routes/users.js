@@ -10,43 +10,39 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id
 const ObjectId = require("mongodb").ObjectId;
 
-
-// Get all users
-usersRoutes.route("/users").get(function (req, res) {
-  let db_connect = dbo.getDb("WeatherDash");
-  db_connect
-    .collection("users")
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
-});
-
-// Get a single user by id
-usersRoutes.route("/users/:id").get(function (req, res) {
+// Log in a user
+usersRoutes.route("/users/signin").post(function (req, response) {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
+  let query = {
+    email: req.body.email,
+    password: req.body.password
+  };
   db_connect
     .collection("users")
-    .findOne(myquery, function (err, result) {
-      if (err) throw err;
-      res.json(result);
+    .findOne(query, function (err, user) {
+      if (err) {
+        throw (err);
+      }
+      response.json(user);
     });
 });
 
 // Create new user
-usersRoutes.route("/users").post(function (req, response) {
+usersRoutes.route("/users/signup").post(function (req, response) {
   let db_connect = dbo.getDb();
-  let myobj = {
+  let newUser = {
     email: req.body.email,
     password: req.body.password,
     bookmarks: req.body.bookmarks
   };
-  db_connect.collection("users").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    response.json(res);
-  });
+  db_connect
+    .collection("users")
+    .insertOne(newUser, function (err, user) {
+      if (err) {
+        throw (err);
+      }
+      response.json(user);
+    });
 });
 
 // Update single user by id

@@ -15,13 +15,15 @@ interface Bookmark {
 }
 
 export interface GetUserReq {
-    _id: string
+    email: string,
+    password: string
 }
-// Get single user by id
-export async function getUser({ _id }: GetUserReq) {
+// Attempt to log in a user
+export async function loginUser({ email, password }: GetUserReq) {
     try {
-        const { data } = await axios.get<User>(
-            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users/${_id}`
+        const { data } = await axios.post<User>(
+            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users/signin`,
+            { email, password }
         );
 
         return data;
@@ -37,7 +39,7 @@ export interface CreateUserReq {
 export async function createUser({ user }: CreateUserReq): Promise<User> {
     try {
         const { data } = await axios.post<User>(
-            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users`,
+            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users/signup`,
             user
         );
 
