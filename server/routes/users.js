@@ -64,21 +64,22 @@ usersRoutes.route("/users/signup").post(function (req, response) {
 });
 
 // Update single user by id
-usersRoutes.route("/update/:id").post(function (req, response) {
+usersRoutes.route("/users/update/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  let newvalues = {
-    $set: {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level,
-    },
-  };
+  let query = { _id: ObjectId(req.params.id) };
+  let updatedUser = {};
+  if (req.body.email) updatedUser.email = req.body.email;
+  if (req.body.password) updatedUser.password = req.body.password;
+  if (req.body.bookmarks) updatedUser.bookmarks = req.body.bookmarks;
+  updatedUser = {
+    $set: updatedUser
+  }
   db_connect
     .collection("users")
-    .updateOne(myquery, newvalues, function (err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
+    .updateOne(query, updatedUser, function (err, res) {
+      if (err) {
+        throw (err);
+      }
       response.json(res);
     });
 });
