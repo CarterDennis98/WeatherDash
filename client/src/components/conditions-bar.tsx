@@ -51,6 +51,8 @@ export default function Conditions(props: any) {
                     conditions={conditions}
                     location={location}
                     alerts={alerts}
+                    user={props.user}
+                    setUser={props.setUser}
                 />
                 <ForecastBar
                     forecast={forecast}

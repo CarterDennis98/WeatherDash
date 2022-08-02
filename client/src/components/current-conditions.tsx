@@ -1,3 +1,4 @@
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -7,7 +8,9 @@ import Popper from '@mui/material/Popper';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import * as React from "react";
+import { getUser, updateUser } from '../api/user';
 import Alert from './alert';
+const states = require("us-state-converter");
 
 enum SeverityColor {
     Extreme = "800000",
@@ -45,6 +48,45 @@ export default function CurrentConditions(props: any) {
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
+    }
+
+    const handleBookmarkClick = async () => {
+        let newBookmarks = props.user.bookmarks;
+
+        let bookmark = {
+            city: props.location.city ? props.location.city : props.conditions.name,
+            state: states.abbr(props.location.state),
+            lat: props.conditions.coord.lat,
+            long: props.conditions.coord.lon
+        }
+
+        // Check to see if bookmark already exists and add/remove
+        if (props.user.bookmarks.some((e: any) => e.lat === bookmark.lat && e.long === bookmark.long)) {
+            newBookmarks = newBookmarks.filter((e: any) => e === bookmark);
+        } else {
+            newBookmarks = newBookmarks.concat(bookmark);
+        }
+
+        try {
+            updateUser({
+                _id: props.user._id,
+                user: {
+                    bookmarks: newBookmarks
+                }
+            }).then(async function (response) {
+                getUser({
+                    _id: props.user._id
+                }).then(async function (response) {
+                    props.setUser({
+                        _id: response._id,
+                        email: response.email,
+                        bookmarks: response.bookmarks
+                    });
+                });
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const open = Boolean(anchorEl);
@@ -106,11 +148,16 @@ export default function CurrentConditions(props: any) {
                             </Popper>
                         </React.Fragment> : null
                     }
-                    <Tooltip title={"Bookmarks coming soon!"} placement="right">
-                        <IconButton onClick={() => { }} sx={{ color: "white" }} disableRipple>
-                            <BookmarkBorderIcon />
-                        </IconButton>
-                    </Tooltip>
+                    {props.user ?
+                        <IconButton onClick={handleBookmarkClick} sx={{ color: "white" }} disableRipple>
+                            {
+                                props.user.bookmarks.some((e: any) => e.lat === props.conditions.coord.lat && e.long === props.conditions.coord.lon) ?
+                                    <BookmarkIcon /> :
+                                    <BookmarkBorderIcon />
+                            }
+                        </IconButton> :
+                        null
+                    }
                 </div>
                 <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>
                     <div style={{ display: "flex", flexDirection: "column", height: "100%", marginLeft: "5px" }}>

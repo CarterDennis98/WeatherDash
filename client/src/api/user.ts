@@ -64,3 +64,30 @@ export async function createUser({ user }: CreateUserReq): Promise<any> {
         throw (error);
     }
 }
+
+export interface UpdateUserReq {
+    _id: string,
+    user: {
+        email?: string,
+        password?: string,
+        bookmarks?: Array<{
+            city: string,
+            state: string,
+            lat: number,
+            long: number
+        }>
+    }
+}
+// Update user
+export async function updateUser({ _id, user }: UpdateUserReq): Promise<any> {
+    try {
+        const { data } = await axios.post(
+            `http://localhost:5000/users/update/${_id}`,
+            user
+        );
+
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}

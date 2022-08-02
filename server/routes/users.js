@@ -51,7 +51,7 @@ usersRoutes.route("/users/signup").post(function (req, response) {
   let newUser = {
     email: req.body.email,
     password: req.body.password,
-    bookmarks: req.body.bookmarks
+    bookmarks: []
   };
   db_connect
     .collection("users")
@@ -68,12 +68,12 @@ usersRoutes.route("/users/update/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
   let query = { _id: ObjectId(req.params.id) };
   let updatedUser = {};
-  if (req.body.email) updatedUser.email = req.body.email;
-  if (req.body.password) updatedUser.password = req.body.password;
-  if (req.body.bookmarks) updatedUser.bookmarks = req.body.bookmarks;
+  for (field in req.body) {
+    updatedUser[field] = req.body[field]
+  }
   updatedUser = {
     $set: updatedUser
-  }
+  };
   db_connect
     .collection("users")
     .updateOne(query, updatedUser, function (err, res) {

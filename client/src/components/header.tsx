@@ -9,21 +9,6 @@ import AccountBox from './account-box';
 import BookmarkedLocation from "./bookmarked-location";
 import SearchBar from "./search-bar";
 
-const testLocations = [
-    {
-        city: "Oklahoma City",
-        state: "OK",
-        lat: 35.481918,
-        long: -97.508469
-    },
-    {
-        city: "Tulsa",
-        state: "OK",
-        lat: 36.153980,
-        long: -95.992775
-    }
-]
-
 export default function Header(props: any) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -46,12 +31,12 @@ export default function Header(props: any) {
                 />
             </div>
             <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "row", alignItems: "center" }}>
-                {testLocations.length > 0 ?
-                    testLocations.map((location: any, index: number) => {
+                {props.user && props.user.bookmarks.length > 0 ?
+                    props.user.bookmarks.map((location: any, index: number) => {
                         return (
                             <BookmarkedLocation
                                 location={location}
-                                last={index === testLocations.length - 1}
+                                last={index === props.user.bookmarks.length - 1}
                                 setCoords={props.setCoords}
                                 key={index}
                             />
