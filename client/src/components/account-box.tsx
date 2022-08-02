@@ -5,7 +5,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import * as React from "react";
 import isEmail from "validator/lib/isEmail";
-import { createUser, loginUser } from '../api/user';
+import { createUser, getUser, loginUser } from '../api/user';
 
 const toggleButtonStyle = {
     "&.MuiToggleButton-root": {
@@ -125,8 +125,17 @@ export default function AccountBox(props: any) {
                 createUser({
                     user: { email: email.email, password: password.password }
                 }).then(async function (response) {
-                    setEmail({ email: "", isValid: false });
-                    setPassword({ password: "", isValid: false });
+                    getUser({
+                        _id: response.insertedId
+                    }).then(async function (response) {
+                        props.setUser({
+                            _id: response._id,
+                            email: response.email,
+                            bookmarks: response.bookmarks
+                        });
+                        setEmail({ email: "", isValid: false });
+                        setPassword({ password: "", isValid: false });
+                    });
                 });
             } catch (error) {
                 throw (error);
@@ -146,8 +155,14 @@ export default function AccountBox(props: any) {
             }}
         >
             {props.user ?
-                <React.Fragment>
-                    <p>{props.user.email}</p>
+                <div style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", height: "100%",
+                    marginBottom: "15px"
+                }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <p style={{ margin: "15px 0px 15px 0px" }}><b>Signed in as:</b></p>
+                        <p style={{ margin: "0px 0px 15px 0px" }}>{props.user.email}</p>
+                    </div>
                     <Button
                         onClick={handleSignOut}
                         variant="contained"
@@ -155,7 +170,7 @@ export default function AccountBox(props: any) {
                     >
                         Sign Out
                     </Button>
-                </React.Fragment> :
+                </div> :
                 <React.Fragment>
                     <ToggleButtonGroup
                         value={task}
@@ -170,45 +185,84 @@ export default function AccountBox(props: any) {
                             Sign up
                         </ToggleButton>
                     </ToggleButtonGroup>
-                    <form style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
-                        <TextField
-                            value={email.email}
-                            onChange={handleEmailChange}
-                            error={!email.isValid && email.email !== ""}
-                            helperText={!email.isValid && email.email !== "" ? "Invalid email" : ""}
-                            variant="standard"
-                            label="Email"
-                            name="email"
-                            sx={textFieldStyle}
-                        />
-                        <TextField
-                            value={password.password}
-                            onChange={handlePasswordChange}
-                            error={!password.isValid && password.password !== ""}
-                            helperText={!password.isValid && password.password !== "" ? "Invalid password" : ""}
-                            type="password"
-                            variant="standard"
-                            label="Password"
-                            name="password"
-                            sx={textFieldStyle}
-                        />
-                        <p
-                            style={{ margin: "0px", fontSize: "10px", textDecoration: "underline", cursor: "pointer" }}
-                            onClick={() => { console.log("I forgor 💀") }}
-                        >
-                            Forgot password?
-                        </p>
-                    </form>
-                    <div style={{ height: "100%", display: "flex", margin: "5px", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                        <Button
-                            onClick={handleSubmit}
-                            variant={"contained"}
-                            disabled={!email.isValid /*|| !password.isValid*/}
-                            sx={submitStyle}
-                        >
-                            Submit
-                        </Button>
-                    </div>
+                    {task === "log in" ?
+                        <React.Fragment>
+                            <form style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+                                <TextField
+                                    value={email.email}
+                                    onChange={handleEmailChange}
+                                    error={!email.isValid && email.email !== ""}
+                                    helperText={!email.isValid && email.email !== "" ? "Invalid email" : ""}
+                                    variant="standard"
+                                    label="Email"
+                                    name="email"
+                                    sx={textFieldStyle}
+                                />
+                                <TextField
+                                    value={password.password}
+                                    onChange={handlePasswordChange}
+                                    type="password"
+                                    variant="standard"
+                                    label="Password"
+                                    name="password"
+                                    sx={textFieldStyle}
+                                />
+                                <p
+                                    style={{ margin: "0px", fontSize: "10px", textDecoration: "underline", cursor: "pointer" }}
+                                    onClick={() => { console.log("I forgor 💀") }}
+                                >
+                                    Forgot password?
+                                </p>
+
+                            </form>
+                            <div style={{ height: "100%", display: "flex", margin: "5px", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                                <Button
+                                    onClick={handleSubmit}
+                                    variant={"contained"}
+                                    disabled={!email.isValid || !password.password}
+                                    sx={submitStyle}
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </React.Fragment> :
+                        <React.Fragment>
+                            <form style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+                                <TextField
+                                    value={email.email}
+                                    onChange={handleEmailChange}
+                                    error={!email.isValid && email.email !== ""}
+                                    helperText={!email.isValid && email.email !== "" ? "Invalid email" : ""}
+                                    variant="standard"
+                                    label="Email"
+                                    name="email"
+                                    sx={textFieldStyle}
+                                />
+                                <TextField
+                                    value={password.password}
+                                    onChange={handlePasswordChange}
+                                    error={!password.isValid && password.password !== ""}
+                                    helperText={!password.isValid && password.password !== "" ? "Invalid password" : ""}
+                                    type="password"
+                                    variant="standard"
+                                    label="Password"
+                                    name="password"
+                                    sx={textFieldStyle}
+                                />
+
+                            </form>
+                            <div style={{ height: "100%", display: "flex", margin: "5px", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                                <Button
+                                    onClick={handleSubmit}
+                                    variant={"contained"}
+                                    disabled={!email.isValid || !password.isValid}
+                                    sx={submitStyle}
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </React.Fragment>
+                    }
                 </React.Fragment>
             }
         </Box>

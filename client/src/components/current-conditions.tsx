@@ -80,7 +80,7 @@ export default function CurrentConditions(props: any) {
                             <Popper id={popperId} open={open} anchorEl={anchorEl} transition>
                                 {({ TransitionProps }) => (
                                     <Grow {...TransitionProps} timeout={200}>
-                                        <div style={{ padding: "5px", backgroundColor: "#4c4c4c", borderRadius: "4px" }}>
+                                        <div style={{ padding: "5px", backgroundColor: "#4c4c4c", borderRadius: "4px", boxShadow: "5px 5px 10px #151515" }}>
                                             <div
                                                 id="alert-popper"
                                                 style={{
