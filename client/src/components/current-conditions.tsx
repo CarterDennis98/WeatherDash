@@ -73,7 +73,7 @@ export default function CurrentConditions(props: any) {
                 user: {
                     bookmarks: newBookmarks
                 }
-            }).then(async function (response) {
+            }).then(async function () {
                 getUser({
                     _id: props.user._id
                 }).then(async function (response) {

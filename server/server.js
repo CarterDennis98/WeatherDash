@@ -1,22 +1,22 @@
-const express = require("express");
+import cors from "cors";
+import express, { json } from "express";
 const app = express();
-const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 
 const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // Routes
 app.use(require("./routes/users"));
 
 // Get driver connection
-const dbo = require("./db/conn");
+import { connectToServer } from "./db/conn";
 
 app.listen(port, () => {
     // Perform a database connection when server starts
-    dbo.connectToServer(function (err) {
+    connectToServer(function (err) {
         if (err) console.error(err);
 
     });
