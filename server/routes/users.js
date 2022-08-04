@@ -1,18 +1,18 @@
-import { Router } from "express";
+const express = require("express");
 
 // usersRoute is an instance of the express router used to define routes
 // The router will be added as a middleware and will take control of requests starting with path /users
-const usersRoutes = Router();
+const usersRoutes = express.Router();
 
 // Connect to the db
-import { getDb } from "../db/conn";
+const dbo = require("../db/conn");
 
 // This help convert the id from string to ObjectId for the _id
-import { ObjectId } from "mongodb";
+const ObjectId = require("mongodb").ObjectId;
 
 // Get a user by _id
 usersRoutes.route("/users/:id").get(function (req, response) {
-  let db_connect = getDb();
+  let db_connect = dbo.getDb();
   let query = { _id: ObjectId(req.params.id) };
   db_connect
     .collection("users")
@@ -30,7 +30,7 @@ usersRoutes.route("/users/:id").get(function (req, response) {
 
 // Log in a user
 usersRoutes.route("/users/signin").post(function (req, response) {
-  let db_connect = getDb();
+  let db_connect = dbo.getDb();
   let query = {
     email: req.body.email,
     password: req.body.password
@@ -47,7 +47,7 @@ usersRoutes.route("/users/signin").post(function (req, response) {
 
 // Create new user
 usersRoutes.route("/users/signup").post(function (req, response) {
-  let db_connect = getDb();
+  let db_connect = dbo.getDb();
   let newUser = {
     email: req.body.email,
     password: req.body.password,
@@ -65,7 +65,7 @@ usersRoutes.route("/users/signup").post(function (req, response) {
 
 // Update single user by id
 usersRoutes.route("/users/update/:id").post(function (req, response) {
-  let db_connect = getDb();
+  let db_connect = dbo.getDb();
   let query = { _id: ObjectId(req.params.id) };
   let updatedUser = {};
   for (field in req.body) {
@@ -86,7 +86,7 @@ usersRoutes.route("/users/update/:id").post(function (req, response) {
 
 // Delete user by id
 usersRoutes.route("/:id").delete((req, response) => {
-  let db_connect = getDb();
+  let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId(req.params.id) };
   db_connect.collection("users").deleteOne(myquery, function (err, obj) {
     if (err) throw err;
@@ -95,4 +95,4 @@ usersRoutes.route("/:id").delete((req, response) => {
   });
 });
 
-export default usersRoutes;
+module.exports = usersRoutes;

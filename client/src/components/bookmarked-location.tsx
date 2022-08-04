@@ -55,7 +55,7 @@ export default function BookmarkedLocation(props: any) {
     React.useEffect(() => {
         const refreshInfo = setInterval(() => {
             getWeatherInfo();
-        }, 30000);
+        }, 600000);
         return () => clearInterval(refreshInfo);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
