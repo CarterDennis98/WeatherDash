@@ -45,10 +45,18 @@ export default function BookmarkedLocation(props: any) {
         });
     }
 
+    // Set inital bookmark info
     React.useEffect(() => {
-        getWeatherInfo().then(function () {
-            setInterval(getWeatherInfo, 300000);
-        });
+        getWeatherInfo();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Set an interval refresh
+    React.useEffect(() => {
+        const refreshInfo = setInterval(() => {
+            getWeatherInfo();
+        }, 30000);
+        return () => clearInterval(refreshInfo);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -78,7 +86,7 @@ export default function BookmarkedLocation(props: any) {
                     }}
                 >
                     {alerts.length.toString()}
-                </p> : 
+                </p> :
                 null
             }
         </div>
