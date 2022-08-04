@@ -61,8 +61,8 @@ export default function CurrentConditions(props: any) {
         }
 
         // Check to see if bookmark already exists and add/remove
-        if (props.user.bookmarks.some((e: any) => e.lat === bookmark.lat && e.long === bookmark.long)) {
-            newBookmarks = newBookmarks.filter((e: any) => e === bookmark);
+        if (newBookmarks.some((e: any) => e.lat === bookmark.lat && e.long === bookmark.long)) {
+            newBookmarks = newBookmarks.filter((e: any) => e.lat !== bookmark.lat && e.long !== bookmark.long);
         } else {
             newBookmarks = newBookmarks.concat(bookmark);
         }
