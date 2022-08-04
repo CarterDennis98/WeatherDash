@@ -9,7 +9,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from "@mui/material/TextField";
 import Tooltip from '@mui/material/Tooltip';
 import Typography from "@mui/material/Typography";
-import { makeStyles } from '@mui/styles';
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import * as React from "react";
@@ -18,19 +17,17 @@ const customPaper = (props: any) => {
     return <Paper sx={{ backgroundColor: "#4a4a4a", backgroundImage: "none" }} {...props} elevation={5} />
 }
 
-const searchBarStyle = makeStyles(() => ({
-    root: {
-        width: "400px",
-        borderRadius: "rem",
-        "& .MuiOutlinedInput-root": {
-            backgroundColor: "#4a4a4a",
-            borderRadius: "2rem"
-        },
-        "& .MuiOutlinedInput-input": {
-            color: "white"
-        }
+const searchBarStyle = {
+    width: "400px",
+    borderRadius: "rem",
+    "& .MuiOutlinedInput-root": {
+        backgroundColor: "#4a4a4a",
+        borderRadius: "2rem"
+    },
+    "& .MuiOutlinedInput-input": {
+        color: "white"
     }
-}));
+}
 
 const autocompleteService = { current: null };
 
@@ -49,7 +46,7 @@ interface PlaceType {
 }
 
 export default function SearchBar(props: any) {
-    const searchBarClasses = searchBarStyle();
+    //const searchBarClasses = searchBarStyle();
 
     const [value, setValue] = React.useState<PlaceType | null>(null);
     const [inputValue, setInputValue] = React.useState("");
@@ -167,7 +164,6 @@ export default function SearchBar(props: any) {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    className={searchBarClasses.root}
                     fullWidth
                     placeholder="Search Locations"
                     InputProps={{
@@ -182,6 +178,7 @@ export default function SearchBar(props: any) {
                             </InputAdornment>
                         )
                     }}
+                    sx={searchBarStyle}
                 />
             )}
             renderOption={(props, option) => {
