@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import * as React from "react";
-import isEmail from "validator/lib/isEmail";
+import validator from "validator";
 import { createUser, getUser, loginUser, updateUser } from '../api/user';
 
 const toggleButtonStyle = {
@@ -96,7 +96,7 @@ export default function AccountBox(props: any) {
         setEmail((prevState) => ({
             ...prevState,
             [event.target.name]: event.target.value,
-            isValid: isEmail(event.target.value)
+            isValid: validator.isEmail(event.target.value)
         }));
     }
 
@@ -104,7 +104,7 @@ export default function AccountBox(props: any) {
         setNewEmail((prevState) => ({
             ...prevState,
             [event.target.name]: event.target.value,
-            isValid: isEmail(event.target.value)
+            isValid: validator.isEmail(event.target.value)
         }));
     }
 
