@@ -88,10 +88,6 @@ export default function AccountBox(props: any) {
     const [newPassword, setNewPassword] = React.useState<{ password: string, isValid: boolean }>({ password: "", isValid: false });
     const [confirmPassword, setConfirmPassword] = React.useState<string>("");
 
-    function validateEmail(value: string) {
-        return (/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/).test(value);
-    }
-
     function validatePassword(value: string) {
         return (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(value));
     }

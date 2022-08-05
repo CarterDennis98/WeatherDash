@@ -21,7 +21,7 @@ export interface GetUserReq {
 export async function getUser({ _id }: GetUserReq) {
     try {
         const { data } = await axios.get(
-            `http://localhost:5000/users/${_id}`
+            `/users/${_id}`
         );
 
         return data;
@@ -38,7 +38,7 @@ export interface LogInUserReq {
 export async function loginUser({ email, password }: LogInUserReq) {
     try {
         const { data } = await axios.post<User>(
-            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users/signin`,
+            `/users/signin`,
             { email, password }
         );
 
@@ -55,7 +55,7 @@ export interface CreateUserReq {
 export async function createUser({ user }: CreateUserReq): Promise<any> {
     try {
         const { data } = await axios.post<User>(
-            `http://localhost:${process.env.REACT_APP_MONGO_PORT}/users/signup`,
+            `/users/signup`,
             user
         );
 
@@ -82,7 +82,7 @@ export interface UpdateUserReq {
 export async function updateUser({ _id, user }: UpdateUserReq): Promise<any> {
     try {
         const { data } = await axios.post(
-            `http://localhost:5000/users/update/${_id}`,
+            `/users/update/${_id}`,
             user
         );
 

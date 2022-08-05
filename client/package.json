@@ -65,5 +65,5 @@
     "@types/autosuggest-highlight": "^3.2.0",
     "@types/lodash": "^4.14.182"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "http://localhost:5000"
 }
