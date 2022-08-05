@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import * as bcrypt from "bcryptjs";
 import * as React from "react";
 import validator from "validator";
 import { createUser, getUser, loginUser, updateUser } from '../api/user';
@@ -88,6 +89,8 @@ export default function AccountBox(props: any) {
     const [newPassword, setNewPassword] = React.useState<{ password: string, isValid: boolean }>({ password: "", isValid: false });
     const [confirmPassword, setConfirmPassword] = React.useState<string>("");
 
+    const saltRounds = 10;
+
     function validatePassword(value: string) {
         return (/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(value));
     }
@@ -156,42 +159,67 @@ export default function AccountBox(props: any) {
         if (task === "log in") {
             try {
                 loginUser({
-                    email: email.email,
-                    password: password.password
+                    email: email.email
                 }).then(async function (response) {
-                    setEmail({ email: "", isValid: false });
-                    setPassword({ password: "", isValid: false });
                     if (response) {
-                        props.setUser({
-                            _id: response._id,
-                            email: response.email,
-                            bookmarks: response.bookmarks
+                        // Check if hashed password from db matches string user entered
+                        bcrypt.compare(password.password, response.password, function (error, isMatch) {
+                            if (error) {
+                                throw (error);
+                            } else if (!isMatch) {
+                                console.log("Passwords don't match");
+                            } else {
+                                props.setUser({
+                                    _id: response._id,
+                                    email: response.email,
+                                    bookmarks: response.bookmarks
+                                });
+                            }
                         });
                     }
+                    setEmail({ email: "", isValid: false });
+                    setPassword({ password: "", isValid: false });
                 });
             } catch (error) {
                 throw (error);
             }
         } else {
-            try {
-                createUser({
-                    user: { email: email.email, password: password.password }
-                }).then(async function (response) {
-                    getUser({
-                        _id: response.insertedId
-                    }).then(async function (response) {
-                        props.setUser({
-                            _id: response._id,
-                            email: response.email,
-                            bookmarks: response.bookmarks
-                        });
-                        setEmail({ email: "", isValid: false });
-                        setPassword({ password: "", isValid: false });
-                    });
-                });
-            } catch (error) {
-                throw (error);
-            }
+            // Hash and salt password
+            bcrypt.genSalt(saltRounds, function (saltError, salt) {
+                if (saltError) {
+                    throw (saltError);
+                } else {
+                    bcrypt.hash(password.password, salt, function (hashError, hash) {
+                        if (hashError) {
+                            throw (hashError);
+                        } else {
+                            // Create user
+                            try {
+                                createUser({
+                                    user: {
+                                        email: email.email,
+                                        password: hash
+                                    }
+                                }).then(async function (response) {
+                                    getUser({
+                                        _id: response.insertedId
+                                    }).then(async function (response) {
+                                        props.setUser({
+                                            _id: response._id,
+                                            email: response.email,
+                                            bookmarks: response.bookmarks
+                                        });
+                                        setEmail({ email: "", isValid: false });
+                                        setPassword({ password: "", isValid: false });
+                                    });
+                                });
+                            } catch (error) {
+                                throw (error);
+                            }
+                        }
+                    })
+                }
+            });
         }
     }
 
@@ -234,22 +262,33 @@ export default function AccountBox(props: any) {
     }
 
     const submitPasswordChange = async () => {
-        try {
-            updateUser({
-                _id: props.user._id,
-                user: {
-                    password: newPassword.password
-                }
-            }).then(async function (response) {
-                console.log(response);
-                setNewPassword({ password: "", isValid: false });
-                setConfirmPassword("");
-                setChangePassword(false);
+        bcrypt.genSalt(saltRounds, function (saltError, salt) {
+            if (saltError) {
+                throw (saltError);
+            } else {
+                bcrypt.hash(newPassword.password, salt, function (hashError, hash) {
+                    if (hashError) {
+                        throw (hashError);
+                    } else {
+                        try {
+                            updateUser({
+                                _id: props.user._id,
+                                user: {
+                                    password: hash
+                                }
+                            }).then(async function () {
+                                setNewPassword({ password: "", isValid: false });
+                                setConfirmPassword("");
+                                setChangePassword(false);
+                            });
+                        } catch (error) {
+                            throw (error);
+                        }
+                    }
+                });
+            }
+        });
 
-            })
-        } catch (error) {
-            throw (error);
-        }
     }
 
     return (
@@ -410,7 +449,7 @@ export default function AccountBox(props: any) {
                                 <Button
                                     onClick={handleSubmit}
                                     variant={"contained"}
-                                    disabled={!email.isValid || !password.isValid}
+                                    disabled={!email.isValid || password.password === ""}
                                     sx={submitStyle}
                                 >
                                     Submit

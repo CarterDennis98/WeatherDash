@@ -9,6 +9,7 @@ const dbo = require("../db/conn");
 
 // This help convert the id from string to ObjectId for the _id
 const ObjectId = require("mongodb").ObjectId;
+const MongoServerError = require("mongodb").MongoServerError;
 
 // Get a user by _id
 usersRoutes.route("/users/:id").get(function (req, response) {
@@ -32,8 +33,7 @@ usersRoutes.route("/users/:id").get(function (req, response) {
 usersRoutes.route("/users/signin").post(function (req, response) {
   let db_connect = dbo.getDb();
   let query = {
-    email: req.body.email,
-    password: req.body.password
+    email: req.body.email
   };
   db_connect
     .collection("users")
@@ -56,7 +56,9 @@ usersRoutes.route("/users/signup").post(function (req, response) {
   db_connect
     .collection("users")
     .insertOne(newUser, function (err, user) {
-      if (err) {
+      if (err instanceof MongoServerError && err.code === 11000) {
+        response.json({ insertedId: null, message: "Email already in use" });
+      } else if (err) {
         throw (err);
       }
       response.json(user);

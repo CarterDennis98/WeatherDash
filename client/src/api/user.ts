@@ -31,15 +31,14 @@ export async function getUser({ _id }: GetUserReq) {
 }
 
 export interface LogInUserReq {
-    email: string,
-    password: string
+    email: string
 }
 // Attempt to log in a user
-export async function loginUser({ email, password }: LogInUserReq) {
+export async function loginUser({ email }: LogInUserReq) {
     try {
         const { data } = await axios.post<User>(
             `/users/signin`,
-            { email, password }
+            { email }
         );
 
         return data;
