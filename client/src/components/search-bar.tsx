@@ -22,10 +22,21 @@ const searchBarStyle = {
     borderRadius: "rem",
     "& .MuiOutlinedInput-root": {
         backgroundColor: "#4a4a4a",
-        borderRadius: "2rem"
+        borderRadius: "2rem",
+        "&:hover fieldset": {
+            borderColor: "white"
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "white"
+        }
     },
     "& .MuiOutlinedInput-input": {
         color: "white"
+    },
+    "& .MuiAutocomplete-endAdornment": {
+        ".MuiButtonBase-root": {
+            color: "white"
+        }
     }
 }
 
