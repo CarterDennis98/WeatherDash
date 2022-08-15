@@ -3,16 +3,15 @@ import Point from '@arcgis/core/geometry/Point';
 import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
-import LayerList from "@arcgis/core/widgets/LayerList";
 import React, { useRef } from "react";
 import { customGraphics } from "../layers/graphics";
-import { spcOutlook } from "../layers/outlook";
-import { radar } from "../layers/radar";
-import { watchesWarnings } from "../layers/watches-warnings";
+import { radar } from "../layers/watches_warnings_radar/radar";
+import { watchesWarnings } from "../layers/watches_warnings_radar/watches-warnings";
+import { spcOutlook } from "../layers/weather/outlook";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;
 
-let map: Map, view: MapView, layerList: LayerList;
+let map: Map, view: MapView;
 
 export default function WeatherMap(props: any) {
     const mapDiv = useRef(null);
@@ -46,12 +45,6 @@ export default function WeatherMap(props: any) {
                 }
             });
         }
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        layerList = new LayerList({
-            view: view,
-            container: "info-panel"
-        });
 
         // Wait for view to be created
         view.when(function () {
