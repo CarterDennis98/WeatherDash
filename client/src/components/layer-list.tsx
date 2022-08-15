@@ -17,7 +17,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
         ...other
     } = props;
 
-    if (layer.type === "group") {
+    if (layer.type === "group" || (layer.sublayers && layer.sublayers.length > 0)) {
         return (
             <TreeItem
                 label={
@@ -72,6 +72,22 @@ export default function LayerList(props: Props) {
                     }
                 </StyledTreeItem>
             );
+        } else if (layer.sublayers) {
+            return (
+                <StyledTreeItem
+                    nodeId={layer.title}
+                    labelText={layer.title}
+                    layer={layer}
+                >
+                    {
+                        layer.sublayers.items.map((layer: any) => {
+                            return (
+                                createEntry(layer)
+                            );
+                        })
+                    }
+                </StyledTreeItem>
+            )
         } else {
             return (
                 <StyledTreeItem
