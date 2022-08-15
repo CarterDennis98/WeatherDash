@@ -21,7 +21,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
         return (
             <TreeItem
                 label={
-                    <Box>
+                    <Box style={{height: "40px"}}>
                         <Typography sx={{ color: "white" }}>
                             <b style={{ fontSize: "14px" }}>{labelText}</b>
                         </Typography>
