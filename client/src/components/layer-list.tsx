@@ -6,7 +6,7 @@ import TreeItem, { TreeItemProps } from "@mui/lab/TreeItem";
 import TreeView from "@mui/lab/TreeView";
 import Box from "@mui/material/Box";
 import IconButton from '@mui/material/IconButton';
-import Slider from '@mui/material/Slider';
+import Slider, { SliderValueLabelProps } from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from "@mui/material/Typography";
@@ -35,6 +35,15 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
         backgroundColor: "#4a4a4a"
     }
 }));
+
+function ValueLabelComponent(props: SliderValueLabelProps) {
+    return (
+        <Tooltip open={props.open} placement="top" title={props.value} disableTouchListener={true} arrow={true}>
+            {props.children}
+        </Tooltip>
+    );
+}
+
 function valueLabelFormat(value: number) {
     return ("Opacity: " + (Math.trunc((value * 100))) + "%");
 }
@@ -101,12 +110,14 @@ function StyledTreeItem(props: StyledTreeItemProps) {
                                         onChange={handleSliderChange}
                                         valueLabelDisplay="auto"
                                         valueLabelFormat={valueLabelFormat}
+                                        components={{ValueLabel: ValueLabelComponent}}
                                     />
                                 </div>
                             </Box>
                         </div>
                     </React.Fragment>
                 }
+                sx={{marginTop: "10px"}}
                 {...other}
             />
         )
@@ -172,7 +183,7 @@ export default function LayerList(props: Props) {
                 defaultCollapseIcon={<ExpandMoreIcon />}
                 defaultExpandIcon={<ChevronRightIcon />}
                 disableSelection
-                sx={{ width: "100%", color: "white" }}
+                sx={{ maxWidth: "100%", overflow: "hidden", color: "white" }}
             >
                 {
                     createEntry(layer)
