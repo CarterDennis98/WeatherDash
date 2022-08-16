@@ -11,6 +11,7 @@ import { atlanticHurricaneForecast } from "./hurricanes_tropical_storms/atlantic
 import { eastPacificHurricaneForecast } from "./hurricanes_tropical_storms/eastPacificHurricaneForecast";
 // Weather group
 import { spcOutlook } from "./weather/outlook";
+import { precipitationHazards } from "./weather/precipitationHazards";
 import { usHazardsDroughtWildfireInfo } from "./weather/usHazardsDroughtWildfireInfo";
 import { weatherFeaturesPrecipitationForecast } from "./weather/weatherFeaturesPrecipitationForecast";
 
@@ -19,6 +20,7 @@ export const allLayers = [
     atlanticHurricaneForecast,
     snowAnalysis,
     usHazardsDroughtWildfireInfo,
+    precipitationHazards,
     spcOutlook,
     weatherFeaturesPrecipitationForecast,
     watchesWarnings,

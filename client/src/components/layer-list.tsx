@@ -89,7 +89,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
                     <React.Fragment>
                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginRight: "10px" }}>
                             <Box>
-                                <Typography>
+                                <Typography sx={{fontSize: "12px"}}>
                                     {layer.sublayers && layer.sublayers.length > 0 ? <b>{labelText}</b> : labelText}
                                 </Typography>
                             </Box>
