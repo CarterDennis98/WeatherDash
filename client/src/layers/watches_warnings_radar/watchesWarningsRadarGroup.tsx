@@ -1,4 +1,5 @@
 import { radar } from "./radar";
+import { snowAnalysis } from "./snow_analysis";
 import { watchesWarnings } from "./watches-warnings";
 
 export const watchesWarningsRadarGroup = {
@@ -6,6 +7,7 @@ export const watchesWarningsRadarGroup = {
     type: "group",
     layers: [
         radar,
-        watchesWarnings
+        watchesWarnings,
+        snowAnalysis
     ]
 }
