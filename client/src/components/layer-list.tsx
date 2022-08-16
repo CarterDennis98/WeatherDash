@@ -23,8 +23,8 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
         backgroundColor: "white"
     }, 
     "& .MuiSlider-thumb.Mui-focusVisible, .MuiSlider-thumb:hover": {
-        boxShadow: "0 0 0 10px #ffffff1f"
-    }, 
+        boxShadow: "none"
+    },
     "& .MuiSlider-rail": {
         backgroundColor: "#4a4a4a"
     },
@@ -73,7 +73,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
         return (
             <TreeItem
                 label={
-                    <Box style={{ height: "40px" }}>
+                    <Box style={{ display: "flex", flexDirection: "row", alignItems: "center", height: "40px" }}>
                         <Typography sx={{ color: "white" }}>
                             <b style={{ fontSize: "14px" }}>{labelText}</b>
                         </Typography>
