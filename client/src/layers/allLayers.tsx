@@ -11,12 +11,16 @@ import { atlanticHurricaneForecast } from "./hurricanes_tropical_storms/atlantic
 import { eastPacificHurricaneForecast } from "./hurricanes_tropical_storms/eastPacificHurricaneForecast";
 // Weather group
 import { spcOutlook } from "./weather/outlook";
+import { usHazardsDroughtWildfireInfo } from "./weather/usHazardsDroughtWildfireInfo";
+import { weatherFeaturesPrecipitationForecast } from "./weather/weatherFeaturesPrecipitationForecast";
 
 export const allLayers = [
     eastPacificHurricaneForecast,
     atlanticHurricaneForecast,
     snowAnalysis,
+    usHazardsDroughtWildfireInfo,
     spcOutlook,
+    weatherFeaturesPrecipitationForecast,
     watchesWarnings,
     radar,
     customGraphics

@@ -69,7 +69,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
         setValue(newValue);
     }
 
-    if (layer.type === "group" || (layer.sublayers && layer.sublayers.length > 0)) {
+    if (layer.type === "group") {
         return (
             <TreeItem
                 label={
@@ -90,7 +90,7 @@ function StyledTreeItem(props: StyledTreeItemProps) {
                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginRight: "10px" }}>
                             <Box>
                                 <Typography>
-                                    {labelText}
+                                    {layer.sublayers && layer.sublayers.length > 0 ? <b>{labelText}</b> : labelText}
                                 </Typography>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "flex-end" }}>
