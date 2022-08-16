@@ -19,8 +19,20 @@ type StyledTreeItemProps = TreeItemProps & {
 
 // Slider UI styling and label formatting
 const StyledSlider = styled(Slider)(({ theme }) => ({
+    "& .MuiSlider-thumb": {
+        backgroundColor: "white"
+    }, 
+    "& .MuiSlider-thumb.Mui-focusVisible, .MuiSlider-thumb:hover": {
+        boxShadow: "0 0 0 10px #ffffff1f"
+    }, 
+    "& .MuiSlider-rail": {
+        backgroundColor: "#4a4a4a"
+    },
+    "& .MuiSlider-track": {
+        backgroundColor: "white"
+    },
     "& .MuiSlider-valueLabel": {
-        backgroundColor: "#04283d"
+        backgroundColor: "#4a4a4a"
     }
 }));
 function valueLabelFormat(value: number) {
