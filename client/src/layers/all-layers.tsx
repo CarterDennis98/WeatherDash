@@ -17,11 +17,17 @@ import { usHazardsDroughtWildfireInfo } from "./weather/us-hazards-drought-wildf
 import { weatherFeaturesPrecipitationForecast } from "./weather/weather-features-precipitation-forecast";
 // Water group
 import { ahpsRiverGaugeObservationsForecast } from "./water/ahps-river-gauge-observations-forecast";
+import { alaskaRiverBreakupStatus } from "./water/alaska-river-breakup-status";
+import { griddedFlashFloodGuidance } from "./water/gridded-flash-flood-guidance";
 import { nationalSignificantRiverFloodOutlook } from "./water/national-significant-river-flood-outlook";
+import { rfcHourlyAndDailyQPE } from "./water/rfc-hourly-and-daily-qpe";
 
 export const allLayers = [
     ahpsRiverGaugeObservationsForecast,
     nationalSignificantRiverFloodOutlook,
+    rfcHourlyAndDailyQPE,
+    griddedFlashFloodGuidance,
+    alaskaRiverBreakupStatus,
     eastPacificHurricaneForecast,
     atlanticHurricaneForecast,
     snowAnalysis,
