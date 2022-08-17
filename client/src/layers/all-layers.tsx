@@ -43,8 +43,27 @@ import { surfaceDust } from "./air quality/surface-dust";
 import { surfaceSmoke } from "./air quality/surface-smoke";
 import { verticalDust } from "./air quality/vertical-dust";
 import { verticalSmoke } from "./air quality/vertical-smoke";
+// Climate Outlooks Group
+import { cpcDroughtOutlook } from "./climate outlooks/cpc-drought-outlook";
+import { eightToFourteenDayOutlooks } from "./climate outlooks/eight-to-fourteen-day-outlooks";
+import { gfsPrecipitationAnomalies } from "./climate outlooks/gfs-precipitation-anomalies";
+import { monthlyPrecipitationOutlooks } from "./climate outlooks/monthly-precipitation-outlooks";
+import { monthlyTemperatureOutlooks } from "./climate outlooks/monthly-temperature-outlooks";
+import { seasonalPrecipitationOutlooks } from "./climate outlooks/seasonal-precipitation-outlooks";
+import { seasonalTemperatureOutlooks } from "./climate outlooks/seasonal-temperature-outlooks";
+import { sixToTenDayOutlooks } from "./climate outlooks/six-to-ten-day-outlooks";
+import { weeklySeaSurfaceTemperatures } from "./climate outlooks/weekly-sea-surface-temperatures";
 
 export const allLayers = [
+    cpcDroughtOutlook,
+    weeklySeaSurfaceTemperatures,
+    seasonalTemperatureOutlooks,
+    seasonalPrecipitationOutlooks,
+    monthlyTemperatureOutlooks,
+    monthlyPrecipitationOutlooks,
+    gfsPrecipitationAnomalies,
+    eightToFourteenDayOutlooks,
+    sixToTenDayOutlooks,
     mpmOneHourBiasCorrected,
     mpmOneHour,
     apm24HourBiasCorrected,
