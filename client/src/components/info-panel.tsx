@@ -1,13 +1,15 @@
-import { hurricaneTropicalStormsGroup } from "../layers/hurricanes_tropical_storms/hurricaneTropicalStormsGroup";
-import { watchesWarningsRadarGroup } from "../layers/watches_warnings_radar/watchesWarningsRadarGroup";
-import { weatherGroup } from "../layers/weather/weatherGroup";
+import { hurricaneTropicalStormsGroup } from "../layers/hurricanes and tropical storms/hurricane-tropical-storms-group";
+import { watchesWarningsRadarGroup } from "../layers/watches warnings radar/watches-warnings-radar-group";
+import { waterGroup } from "../layers/water/water-group";
+import { weatherGroup } from "../layers/weather/weather-group";
 import LayerList from "./layer-list";
 
 export default function InfoPanel(props: any) {
     const groups = [
         watchesWarningsRadarGroup,
         hurricaneTropicalStormsGroup,
-        weatherGroup
+        weatherGroup,
+        waterGroup
     ];
 
     return (

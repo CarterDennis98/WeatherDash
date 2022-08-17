@@ -4,7 +4,7 @@ import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import React, { useRef } from "react";
-import { allLayers } from "../layers/allLayers";
+import { allLayers } from "../layers/all-layers";
 import { customGraphics } from "../layers/graphics";
 
 esriConfig.apiKey = process.env.REACT_APP_ESRI_API_KEY as string;

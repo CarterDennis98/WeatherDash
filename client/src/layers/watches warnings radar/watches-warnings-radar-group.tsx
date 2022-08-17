@@ -1,5 +1,5 @@
 import { radar } from "./radar";
-import { snowAnalysis } from "./snow_analysis";
+import { snowAnalysis } from "./snow-analysis";
 import { watchesWarnings } from "./watches-warnings";
 
 export const watchesWarningsRadarGroup = {
