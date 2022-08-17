@@ -1,3 +1,4 @@
+import { fireGroup } from "../layers/fire weather/fire-group";
 import { hurricaneTropicalStormsGroup } from "../layers/hurricanes and tropical storms/hurricane-tropical-storms-group";
 import { watchesWarningsRadarGroup } from "../layers/watches warnings radar/watches-warnings-radar-group";
 import { waterGroup } from "../layers/water/water-group";
@@ -9,7 +10,8 @@ export default function InfoPanel(props: any) {
         watchesWarningsRadarGroup,
         hurricaneTropicalStormsGroup,
         weatherGroup,
-        waterGroup
+        waterGroup,
+        fireGroup
     ];
 
     return (

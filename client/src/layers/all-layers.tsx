@@ -6,7 +6,7 @@ import { customGraphics } from "./graphics";
 import { radar } from "./watches warnings radar/radar";
 import { snowAnalysis } from "./watches warnings radar/snow-analysis";
 import { watchesWarnings } from "./watches warnings radar/watches-warnings";
-// Hurricanes/Tropical Storms
+// Hurricanes/Tropical Storms group
 import { atlanticHurricaneForecast } from "./hurricanes and tropical storms/atlantic-hurricane-forecast";
 import { eastPacificHurricaneForecast } from "./hurricanes and tropical storms/east-pacific-hurricane-forecast";
 // Weather group
@@ -21,8 +21,11 @@ import { alaskaRiverBreakupStatus } from "./water/alaska-river-breakup-status";
 import { griddedFlashFloodGuidance } from "./water/gridded-flash-flood-guidance";
 import { nationalSignificantRiverFloodOutlook } from "./water/national-significant-river-flood-outlook";
 import { rfcHourlyAndDailyQPE } from "./water/rfc-hourly-and-daily-qpe";
+// Fire Weather group
+import { spcFireWeatherOutlooks } from "./fire weather/spc-fire-weather-outlooks";
 
 export const allLayers = [
+    spcFireWeatherOutlooks,
     ahpsRiverGaugeObservationsForecast,
     nationalSignificantRiverFloodOutlook,
     rfcHourlyAndDailyQPE,
