@@ -20,6 +20,7 @@ import { ahpsRiverGaugeObservationsForecast } from "./water/ahps-river-gauge-obs
 import { alaskaRiverBreakupStatus } from "./water/alaska-river-breakup-status";
 import { griddedFlashFloodGuidance } from "./water/gridded-flash-flood-guidance";
 import { nationalSignificantRiverFloodOutlook } from "./water/national-significant-river-flood-outlook";
+import { quantitativePrecipForecast } from "./water/quantitative-precip-forecast";
 import { rfcHourlyAndDailyQPE } from "./water/rfc-hourly-and-daily-qpe";
 // Fire Weather group
 import { spcFireWeatherOutlooks } from "./fire weather/spc-fire-weather-outlooks";
@@ -66,6 +67,7 @@ export const allLayers = [
     ahpsRiverGaugeObservationsForecast,
     nationalSignificantRiverFloodOutlook,
     rfcHourlyAndDailyQPE,
+    quantitativePrecipForecast,
     griddedFlashFloodGuidance,
     alaskaRiverBreakupStatus,
     eastPacificHurricaneForecast,
