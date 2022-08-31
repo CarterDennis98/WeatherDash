@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import CurrentConditions from "./current-conditions";
 import ForecastBar from "./forecast-bar";
+import ForecastError from "./forecast-error";
 
 export default function Conditions(props: any) {
     const [location, setLocation] = React.useState<{ city: string, county: string, state: string }>();
@@ -45,18 +46,37 @@ export default function Conditions(props: any) {
 
     return (
         <div style={{ height: "80%", width: "100%", backgroundColor: "#2b2b2b", margin: "20px", boxShadow: "0px 5px 10px #151515", overflow: "hidden" }}>
-            <div style={{ display: "flex", flexDirection: "row", paddingLeft: "5px", height: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                <CurrentConditions
-                    forecast={forecast}
-                    conditions={conditions}
-                    location={location}
-                    alerts={alerts}
-                    user={props.user}
-                    setUser={props.setUser}
-                />
-                <ForecastBar
-                    forecast={forecast}
-                />
+            <div style={{ display: "flex", flexDirection: "row", paddingLeft: "5px", height: "100%", justifyContent: forecast ? "space-between" : "center", alignItems: "center" }}>
+                {forecast ?
+                    <React.Fragment>
+                        <CurrentConditions
+                            forecast={forecast}
+                            conditions={conditions}
+                            location={location}
+                            alerts={alerts}
+                            user={props.user}
+                            setUser={props.setUser}
+                        />
+                        <ForecastBar
+                            forecast={forecast}
+                        />
+                    </React.Fragment> :
+                    <React.Fragment>
+                        <CurrentConditions
+                            forecast={forecast}
+                            conditions={conditions}
+                            location={location}
+                            alerts={alerts}
+                            user={props.user}
+                            setUser={props.setUser}
+                        />
+                        <ForecastError
+                            location={location}
+                            conditions={conditions}
+                        />
+                    </React.Fragment>
+                }
+
             </div>
         </div>
     )
