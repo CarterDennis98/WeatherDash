@@ -202,7 +202,7 @@ export default function AccountBox(props: any) {
                                     }
                                 }).then(async function (response) {
                                     getUser({
-                                        _id: response.insertedId
+                                        _id: response._id
                                     }).then(async function (response) {
                                         props.setUser({
                                             _id: response._id,

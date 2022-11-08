@@ -10,7 +10,7 @@ export const getUser = async (_id: string) => {
 
 export const signIn = async (data: any) => {
     try {
-        return await User.find({ 'email': data.email });
+        return await User.findOne({ 'email': data.email });
     } catch (error) {
         throw error;
     }

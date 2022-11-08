@@ -75,7 +75,7 @@ export interface UpdateUserReq {
 // Update user
 export async function updateUser({ _id, user }: UpdateUserReq): Promise<any> {
     try {
-        const { data } = await axios.post(
+        const { data } = await axios.put(
             `/users/${_id}`,
             user
         );
