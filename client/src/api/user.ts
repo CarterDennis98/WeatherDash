@@ -69,19 +69,14 @@ export interface UpdateUserReq {
     user: {
         email?: string,
         password?: string,
-        bookmarks?: Array<{
-            city: string,
-            state: string,
-            lat: number,
-            long: number
-        }>
+        bookmarks?: Array<Bookmark>
     }
 }
 // Update user
 export async function updateUser({ _id, user }: UpdateUserReq): Promise<any> {
     try {
         const { data } = await axios.post(
-            `/users/update/${_id}`,
+            `/users/${_id}`,
             user
         );
 
