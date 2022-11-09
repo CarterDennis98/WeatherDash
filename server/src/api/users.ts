@@ -1,5 +1,13 @@
 import { User } from "../models/users";
 
+export const getAllUsers = async () => {
+    try {
+        return await User.find({});
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const getUser = async (_id: string) => {
     try {
         return await User.findOne({ _id });

@@ -1,9 +1,14 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { getUser, signIn, signUp, deleteUser, updateUser } from '../api/users';
+import { getUser, signIn, signUp, deleteUser, updateUser, getAllUsers } from '../api/users';
 import { Bookmark } from '../models/bookmark';
-import { User } from '../models/users';
 
 async function routes(fastify: FastifyInstance) {
+  // Get a single user
+  fastify.get('/', async (req, res) => {
+    const result = await getAllUsers();
+    res.status(200).send(result);
+  });
+
   // Get a single user
   fastify.get<{ Params: { _id: string } }>('/:_id', async (req, res) => {
     const result = await getUser(req.params._id);
